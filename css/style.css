@@ -357,15 +357,22 @@ body {
     }
     
     .project-grid {
-        gap: 0; /* 移除間距 */
-        padding: 0; /* 移除內邊距 */
-    }
-
-    .project-card {
-        flex: 0 0 100vw; /* 每個卡片佔滿整個視窗寬度 */
-        scroll-snap-align: center; /* 確保卡片對齊中心 */
-        padding: 1rem; /* 給卡片內容一些內邊距 */
-    }
+        touch-action: pan-x;
+        user-select: none;
+        -webkit-user-drag: none;
+        -webkit-tap-highlight-color: transparent;
+        transform: translate3d(0, 0, 0);
+        will-change: transform;
+      }
+    
+      .project-card {
+        flex: 0 0 100%;
+        scroll-snap-align: center;
+        /* 確保卡片不會被壓縮 */
+        min-width: 280px;
+        max-width: 100vw;
+        margin: 0 1rem;
+      }
 
     /* 禁止頁面橫向滾動 */
     html, body {
