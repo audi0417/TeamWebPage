@@ -351,34 +351,7 @@ body {
     .year-label {
         font-size: 1.8rem;
     }
-    .project-carousel {
-        position: relative;
-        overflow: hidden;
-        width: 100%;
-        box-sizing: border-box;
-    }
-    
-    .project-grid {
-        display: flex;
-        transition: transform 0.3s ease;
-        width: max-content;
-        gap: 1rem; /* 統一間距 */
-    }
-    
-    .project-card {
-        flex: 0 0 auto;
-        width: calc(100vw - 2rem); /* 減去間距 */
-        margin: 0;
-        box-sizing: border-box;
-    }
-
-    /* 禁止頁面橫向滾動 */
-    html, body {
-        overflow-x: hidden;
-        position: relative;
-        width: 100%;
-    }
-}
+}ㄘ
 
 /* 聯絡區塊 */
 .contact-section {
