@@ -227,7 +227,7 @@ function getCardWidth() {
     const card = carousel.querySelector('.project-card');
     return card ? card.offsetWidth + parseInt(window.getComputedStyle(card).marginRight) : 0;
 }
-// 更新卡片寬度計算函數
+
 function getCardMetrics() {
     const card = carousel.querySelector('.project-card');
     if(!card) return null;
@@ -237,10 +237,16 @@ function getCardMetrics() {
     const margin = parseInt(style.marginRight);
     const totalWidth = width + margin;
     
+    // 獲取容器寬度
+    const containerWidth = carousel.parentElement.offsetWidth;
+    
     return {
         width,
         margin,
-        totalWidth
+        totalWidth,
+        containerWidth,
+        // 計算實際需要的中心點偏移量
+        centerOffset: (containerWidth - width) / 2
     };
 }
 
@@ -344,34 +350,44 @@ function snapToNearestCard() {
     const metrics = getCardMetrics();
     if(!metrics) return;
     
-    const { totalWidth } = metrics;
+    const { totalWidth, centerOffset } = metrics;
     
-    // 計算視窗中心點
-    const containerWidth = carousel.parentElement.offsetWidth;
-    const centerOffset = (containerWidth - metrics.width) / 2;
+    // 調整snap位置計算
+    const currentOffset = -currentTranslate; // 轉換為正值來簡化計算
+    const cardIndex = Math.round(currentOffset / totalWidth);
+    const targetOffset = cardIndex * totalWidth;
     
-    // 計算最近的卡片位置
-    const rawPosition = currentTranslate - centerOffset;
-    const snapPosition = Math.round(rawPosition / totalWidth);
-    const targetTranslate = (snapPosition * totalWidth) + centerOffset;
+    // 計算最終位置，包含中心點偏移
+    currentTranslate = -(targetOffset - centerOffset);
     
-    // 確保不超出邊界
+    // 確保邊界檢查
     const maxTranslate = centerOffset;
-    const minTranslate = -(carousel.scrollWidth - containerWidth + centerOffset);
+    const minTranslate = -(carousel.scrollWidth - metrics.containerWidth + centerOffset);
     
-    currentTranslate = Math.max(Math.min(targetTranslate, maxTranslate), minTranslate);
+    currentTranslate = Math.max(Math.min(currentTranslate, maxTranslate), minTranslate);
     prevTranslate = currentTranslate;
     
     // 使用更平滑的動畫
     carousel.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
     setSliderPosition();
     
-    // 清除過渡效果
     setTimeout(() => {
         carousel.style.transition = 'none';
     }, 300);
 }
+// 更新CSS確保容器正確定位
+function updateCarouselStyles() {
+    const metrics = getCardMetrics();
+    if(!metrics) return;
+    
+    // 確保容器有正確的padding來輔助定位
+    carousel.parentElement.style.paddingLeft = `${metrics.centerOffset}px`;
+    carousel.parentElement.style.paddingRight = `${metrics.centerOffset}px`;
+}
 
+// 在初始化和視窗調整時更新樣式
+updateCarouselStyles();
+window.addEventListener('resize', updateCarouselStyles);
 function animation() {
     setSliderPosition();
     if (isDragging) requestAnimationFrame(animation);
