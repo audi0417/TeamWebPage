@@ -191,19 +191,18 @@ body {
     position: relative;
     max-width: 100%;
     overflow: hidden;
-    /* 增加上下內邊距，提供更大的拖曳空間 */
     padding: 4rem 0;
+    touch-action: pan-x; /* 優化觸控體驗 */
+    -webkit-overflow-scrolling: touch; /* iOS 滾動優化 */
 }
 
 .project-grid {
     display: flex;
     gap: 2rem;
-    /* 增加左右內邊距，確保首尾卡片有足夠空間 */
     padding: 2rem 10%;
     cursor: grab;
     user-select: none;
-    transition: transform 0.3s ease;
-    /* 確保內容垂直置中 */
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.5, 1); /* 更順暢的動畫 */
     align-items: center;
     min-height: 400px;
 }
@@ -351,7 +350,20 @@ body {
     .year-label {
         font-size: 1.8rem;
     }
-}ㄘ
+    .project-carousel {
+        padding: 2rem 0; /* 手機版減少上下內邊距 */
+    }
+    
+    .project-grid {
+        gap: 1rem; /* 手機版縮小卡片間距 */
+        padding: 1rem calc((100vw - 85vw) / 2); /* 首個卡片置中 */
+    }
+
+    .project-card {
+        flex: 0 0 85vw; /* 手機版卡片寬度 */
+        max-width: 350px;
+    }
+}
 
 /* 聯絡區塊 */
 .contact-section {

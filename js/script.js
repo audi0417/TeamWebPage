@@ -218,6 +218,9 @@ let prevTranslate = 0;
 let animationID = 0;
 let dragStartTime = 0;
 let dragDistance = 0;
+let velocity = 0;
+let lastX = 0;
+let momentumID;
 
 // 防止圖片拖曳
 carousel.querySelectorAll('img').forEach(img => {
@@ -225,9 +228,9 @@ carousel.querySelectorAll('img').forEach(img => {
 });
 
 // 觸控事件
-carousel.addEventListener('touchstart', touchStart);
-carousel.addEventListener('touchend', touchEnd);
-carousel.addEventListener('touchmove', touchMove);
+carousel.addEventListener('touchstart', touchStart, { passive: true });
+carousel.addEventListener('touchend', touchEnd, { passive: true });
+carousel.addEventListener('touchmove', touchMove, { passive: false });
 
 // 滑鼠事件
 carousel.addEventListener('mousedown', touchStart);
@@ -238,9 +241,12 @@ carousel.addEventListener('mousemove', touchMove);
 function touchStart(e) {
     isDragging = true;
     startPos = getPositionX(e);
+    lastX = startPos;
     dragStartTime = Date.now();
     dragDistance = 0;
+    velocity = 0;
     
+    cancelMomentumTracking();
     animationID = requestAnimationFrame(animation);
     carousel.style.cursor = 'grabbing';
 }
@@ -249,6 +255,12 @@ function touchMove(e) {
     if (!isDragging) return;
     
     const currentPosition = getPositionX(e);
+    const deltaX = currentPosition - lastX;
+    lastX = currentPosition;
+    
+    // 計算速度用於慣性
+    velocity = deltaX * 2.5;
+    
     dragDistance = Math.abs(currentPosition - startPos);
     currentTranslate = prevTranslate + currentPosition - startPos;
 }
@@ -267,24 +279,73 @@ function touchEnd(e) {
             const index = Array.from(card.parentElement.children).indexOf(card);
             openModal(index);
         }
+    } else {
+        // 啟動慣性滾動
+        beginMomentumTracking();
     }
     
-    // 處理拖曳結束的邊界檢查
+    carousel.style.cursor = 'grab';
+}
+
+function animation() {
+    setSliderPosition();
+    if (isDragging) requestAnimationFrame(animation);
+}
+
+function setSliderPosition() {
+    // 處理邊界檢查
+    const maxTranslate = 0;
+    const minTranslate = -(carousel.scrollWidth - carousel.clientWidth);
+    
+    if (currentTranslate > maxTranslate) {
+        currentTranslate = maxTranslate + (currentTranslate - maxTranslate) * 0.5;
+    } else if (currentTranslate < minTranslate) {
+        currentTranslate = minTranslate + (currentTranslate - minTranslate) * 0.5;
+    }
+    
+    carousel.style.transform = `translateX(${currentTranslate}px)`;
+}
+
+function getPositionX(e) {
+    return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+}
+
+// 慣性滾動相關
+function beginMomentumTracking() {
+    cancelMomentumTracking();
+    momentumID = requestAnimationFrame(momentumLoop);
+}
+
+function cancelMomentumTracking() {
+    cancelAnimationFrame(momentumID);
+}
+
+function momentumLoop() {
+    // 慣性滾動效果
+    velocity *= 0.95; // 摩擦係數
+    currentTranslate += velocity;
+    
+    // 處理邊界檢查
     const maxTranslate = 0;
     const minTranslate = -(carousel.scrollWidth - carousel.clientWidth);
     
     if (currentTranslate > maxTranslate) {
         currentTranslate = maxTranslate;
-    }
-    
-    if (currentTranslate < minTranslate) {
+        velocity = 0;
+    } else if (currentTranslate < minTranslate) {
         currentTranslate = minTranslate;
+        velocity = 0;
     }
     
-    prevTranslate = currentTranslate;
-    carousel.style.cursor = 'grab';
+    // 當速度很小時停止動畫
+    if (Math.abs(velocity) > 0.5) {
+        setSliderPosition();
+        momentumID = requestAnimationFrame(momentumLoop);
+    } else {
+        // 固定到最終位置
+        prevTranslate = currentTranslate;
+    }
 }
-
 // 修改卡片點擊事件處理
 document.querySelectorAll('.project-card').forEach((card, index) => {
     // 移除直接的onclick屬性
