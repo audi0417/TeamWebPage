@@ -113,7 +113,7 @@ const projects = [
         ],
         images: [
             "templates/SweetLine/img1.png",
-
+            "templates/SweetLine/img2.png",
         ],
         // links: [
         //     {

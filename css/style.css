@@ -692,7 +692,25 @@ footer {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     text-align: center;
 }
-
+/* 箭頭按鈕基本樣式 */
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    display: none; /* 預設隱藏 */
+  }
+.arrow-left { left: 10px; }
+.arrow-right { right: 10px; }
 /* 動畫效果 */
 @keyframes fadeInUp {
     from {
@@ -773,6 +791,13 @@ footer {
 
     .media-thumbnail {
         scroll-snap-align: start;
+    }
+    .carousel-arrow {
+        display: block;
+      }
+    .project-grid {
+        touch-action: none; /* 停用原生觸控行為 */
+        user-select: none;
     }
 }
 
