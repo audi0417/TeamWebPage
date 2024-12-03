@@ -351,17 +351,27 @@ body {
         font-size: 1.8rem;
     }
     .project-carousel {
-        padding: 2rem 0; /* 手機版減少上下內邊距 */
+        padding: 2rem 0;
+        width: 100vw; /* 確保寬度等於視窗寬度 */
+        scroll-snap-type: x mandatory; /* 啟用滾動對齊 */
     }
     
     .project-grid {
-        gap: 1rem; /* 手機版縮小卡片間距 */
-        padding: 1rem calc((100vw - 85vw) / 2); /* 首個卡片置中 */
+        gap: 0; /* 移除間距 */
+        padding: 0; /* 移除內邊距 */
     }
 
     .project-card {
-        flex: 0 0 85vw; /* 手機版卡片寬度 */
-        max-width: 350px;
+        flex: 0 0 100vw; /* 每個卡片佔滿整個視窗寬度 */
+        scroll-snap-align: center; /* 確保卡片對齊中心 */
+        padding: 1rem; /* 給卡片內容一些內邊距 */
+    }
+
+    /* 禁止頁面橫向滾動 */
+    html, body {
+        overflow-x: hidden;
+        position: relative;
+        width: 100%;
     }
 }
 
