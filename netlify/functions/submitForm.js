@@ -18,9 +18,9 @@ exports.handler = async (event, context) => {
             },
             body: JSON.stringify({
                 fields: {
-                    姓名: data.name,
-                    電子郵件: data.email,
-                    內容: data.message
+                    Name: data.name,
+                    Email: data.email,
+                    Message: data.message
                 }
             })
         });
