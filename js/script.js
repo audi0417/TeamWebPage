@@ -222,43 +222,15 @@ let velocity = 0;
 let lastX = 0;
 let momentumID;
 
-// 獲取卡片寬度
-function getCardWidth() {
-    const card = carousel.querySelector('.project-card');
-    return card ? card.offsetWidth + parseInt(window.getComputedStyle(card).marginRight) : 0;
-}
-
-function getCardMetrics() {
-    const card = carousel.querySelector('.project-card');
-    if(!card) return null;
-    
-    const style = window.getComputedStyle(card);
-    const width = card.offsetWidth;
-    const margin = parseInt(style.marginRight);
-    const totalWidth = width + margin;
-    
-    // 獲取容器寬度
-    const containerWidth = carousel.parentElement.offsetWidth;
-    
-    return {
-        width,
-        margin,
-        totalWidth,
-        containerWidth,
-        // 計算實際需要的中心點偏移量
-        centerOffset: (containerWidth - width) / 2
-    };
-}
-
 // 防止圖片拖曳
 carousel.querySelectorAll('img').forEach(img => {
     img.addEventListener('dragstart', (e) => e.preventDefault());
 });
 
 // 觸控事件
-carousel.addEventListener('touchstart', touchStart, { passive: true });
-carousel.addEventListener('touchend', touchEnd, { passive: true });
-carousel.addEventListener('touchmove', touchMove, { passive: false });
+carousel.addEventListener('touchstart', touchStart);
+carousel.addEventListener('touchend', touchEnd);
+carousel.addEventListener('touchmove', touchMove);
 
 // 滑鼠事件 
 carousel.addEventListener('mousedown', touchStart);
@@ -274,12 +246,9 @@ function touchStart(e) {
     
     isDragging = true;
     startPos = getPositionX(e);
-    lastX = startPos;
     dragStartTime = Date.now();
     dragDistance = 0;
-    velocity = 0;
     
-    cancelMomentumTracking();
     animationID = requestAnimationFrame(animation);
     carousel.style.cursor = 'grabbing';
     carousel.style.transition = 'none';
@@ -440,6 +409,9 @@ function momentumLoop() {
         prevTranslate = currentTranslate;
         snapToNearestCard();
     }
+    
+    prevTranslate = currentTranslate;
+    carousel.style.cursor = 'grab';
 }
 
 // 修改卡片點擊事件處理

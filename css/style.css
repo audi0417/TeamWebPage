@@ -191,18 +191,19 @@ body {
     position: relative;
     max-width: 100%;
     overflow: hidden;
+    /* 增加上下內邊距，提供更大的拖曳空間 */
     padding: 4rem 0;
-    touch-action: pan-x; /* 優化觸控體驗 */
-    -webkit-overflow-scrolling: touch; /* iOS 滾動優化 */
 }
 
 .project-grid {
     display: flex;
     gap: 2rem;
+    /* 增加左右內邊距，確保首尾卡片有足夠空間 */
     padding: 2rem 10%;
     cursor: grab;
     user-select: none;
-    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.5, 1); /* 更順暢的動畫 */
+    transition: transform 0.3s ease;
+    /* 確保內容垂直置中 */
     align-items: center;
     min-height: 400px;
 }
