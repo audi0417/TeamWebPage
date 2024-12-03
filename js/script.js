@@ -227,6 +227,22 @@ function getCardWidth() {
     const card = carousel.querySelector('.project-card');
     return card ? card.offsetWidth + parseInt(window.getComputedStyle(card).marginRight) : 0;
 }
+// 更新卡片寬度計算函數
+function getCardMetrics() {
+    const card = carousel.querySelector('.project-card');
+    if(!card) return null;
+    
+    const style = window.getComputedStyle(card);
+    const width = card.offsetWidth;
+    const margin = parseInt(style.marginRight);
+    const totalWidth = width + margin;
+    
+    return {
+        width,
+        margin,
+        totalWidth
+    };
+}
 
 // 防止圖片拖曳
 carousel.querySelectorAll('img').forEach(img => {
@@ -266,7 +282,6 @@ function touchStart(e) {
 function touchMove(e) {
     if (!isDragging) return;
     
-    // 阻止觸控時的頁面滾動
     if(e.type === 'touchmove') {
         e.preventDefault();
     }
@@ -275,22 +290,25 @@ function touchMove(e) {
     const deltaX = currentPosition - lastX;
     lastX = currentPosition;
     
-    // 計算速度用於慣性,添加方向性
     velocity = deltaX * (deltaX < 0 ? 2.8 : 2.5);
-    
     dragDistance = Math.abs(currentPosition - startPos);
     
-    // 添加阻尼效果
-    const proposedTranslate = prevTranslate + currentPosition - startPos;
-    const maxTranslate = 0;
-    const minTranslate = -(carousel.scrollWidth - carousel.clientWidth);
-    
-    if(proposedTranslate > maxTranslate) {
-        currentTranslate = maxTranslate + (proposedTranslate - maxTranslate) * 0.3;
-    } else if(proposedTranslate < minTranslate) {
-        currentTranslate = minTranslate + (proposedTranslate - minTranslate) * 0.3;
-    } else {
-        currentTranslate = proposedTranslate;
+    const containerWidth = carousel.parentElement.offsetWidth;
+    const metrics = getCardMetrics();
+    if(metrics) {
+        const centerOffset = (containerWidth - metrics.width) / 2;
+        const maxTranslate = centerOffset;
+        const minTranslate = -(carousel.scrollWidth - containerWidth + centerOffset);
+        
+        const proposedTranslate = prevTranslate + currentPosition - startPos;
+        
+        if(proposedTranslate > maxTranslate) {
+            currentTranslate = maxTranslate + (proposedTranslate - maxTranslate) * 0.3;
+        } else if(proposedTranslate < minTranslate) {
+            currentTranslate = minTranslate + (proposedTranslate - minTranslate) * 0.3;
+        } else {
+            currentTranslate = proposedTranslate;
+        }
     }
 }
 
@@ -323,22 +341,35 @@ function touchEnd(e) {
 }
 
 function snapToNearestCard() {
-    const cardWidth = getCardWidth();
-    if(!cardWidth) return;
+    const metrics = getCardMetrics();
+    if(!metrics) return;
     
-    carousel.style.transition = 'transform 0.3s cubic-bezier(0.23, 1, 0.32, 1)';
+    const { totalWidth } = metrics;
+    
+    // 計算視窗中心點
+    const containerWidth = carousel.parentElement.offsetWidth;
+    const centerOffset = (containerWidth - metrics.width) / 2;
     
     // 計算最近的卡片位置
-    const snapPoint = Math.round(currentTranslate / cardWidth) * cardWidth;
+    const rawPosition = currentTranslate - centerOffset;
+    const snapPosition = Math.round(rawPosition / totalWidth);
+    const targetTranslate = (snapPosition * totalWidth) + centerOffset;
     
     // 確保不超出邊界
-    const maxTranslate = 0;
-    const minTranslate = -(carousel.scrollWidth - carousel.clientWidth);
+    const maxTranslate = centerOffset;
+    const minTranslate = -(carousel.scrollWidth - containerWidth + centerOffset);
     
-    currentTranslate = Math.max(Math.min(snapPoint, maxTranslate), minTranslate);
+    currentTranslate = Math.max(Math.min(targetTranslate, maxTranslate), minTranslate);
     prevTranslate = currentTranslate;
     
+    // 使用更平滑的動畫
+    carousel.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
     setSliderPosition();
+    
+    // 清除過渡效果
+    setTimeout(() => {
+        carousel.style.transition = 'none';
+    }, 300);
 }
 
 function animation() {
@@ -366,25 +397,27 @@ function cancelMomentumTracking() {
 }
 
 function momentumLoop() {
-    // 改善慣性滾動效果
-    velocity *= 0.92; // 調整摩擦係數
+    velocity *= 0.92;
     currentTranslate += velocity;
     
-    const maxTranslate = 0;
-    const minTranslate = -(carousel.scrollWidth - carousel.clientWidth);
-    
-    // 到達邊界時停止
-    if (currentTranslate > maxTranslate) {
-        currentTranslate = maxTranslate;
-        velocity = 0;
-    } else if (currentTranslate < minTranslate) {
-        currentTranslate = minTranslate;
-        velocity = 0;
+    const containerWidth = carousel.parentElement.offsetWidth;
+    const metrics = getCardMetrics();
+    if(metrics) {
+        const centerOffset = (containerWidth - metrics.width) / 2;
+        const maxTranslate = centerOffset;
+        const minTranslate = -(carousel.scrollWidth - containerWidth + centerOffset);
+        
+        if (currentTranslate > maxTranslate) {
+            currentTranslate = maxTranslate;
+            velocity = 0;
+        } else if (currentTranslate < minTranslate) {
+            currentTranslate = minTranslate;
+            velocity = 0;
+        }
     }
     
     setSliderPosition();
     
-    // 當速度很小時停止動畫並對齊到最近的卡片
     if (Math.abs(velocity) > 0.5) {
         momentumID = requestAnimationFrame(momentumLoop);
     } else {
