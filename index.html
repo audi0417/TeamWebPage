@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>療心智能 - 智慧醫療的未來</title>
+
+    <!-- 字體和圖標 -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Space+Grotesk:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- 自定義樣式 -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- 粒子背景 -->
+    <div id="particles-js"></div>
+
+    <div class="container">
+      <!-- 導航欄 -->
+      <nav class="navbar">
+        <div class="navbar-content">
+          <div class="logo">療心智能</div>
+          <div class="nav-links">
+            <a href="#about">關於我們</a>
+            <a href="#projects">創新項目</a>
+            <a href="#achievements">團隊成就</a>
+            <a href="#contact">聯絡我們</a>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Hero 區塊 -->
+      <section class="hero" id="about">
+        <div class="hero-content">
+          <h1>用AI科技<br />守護每個生命</h1>
+          <p>
+            療心智能 致力於結合人工智能與醫療科技，打造智慧化的健康照護解決方案
+          </p>
+        </div>
+      </section>
+
+      <!-- 願景區塊 -->
+      <section class="section" id="vision">
+        <div class="section-container">
+          <h2 class="section-title">團隊願景</h2>
+          <div class="vision-content">
+            <p>
+              療心智能團隊長期深耕於健康促進與預防醫學的相關領域，過去常聚焦於銀髮族群的健康需求，推出長照媒合照護平台、遊戲化失智預防APP、服藥提醒
+              Linebot等產品服務，並參與競賽榮獲各項殊榮，同時也參與過多項孵化計畫，累積豐富的實務經驗。致力於個人化、智能化的服務開發，針對國內各類族群如慢性病患、長者、婦癌患者，解決其醫療與照護需求，提升全民健康意識。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 專案展示區 -->
+      <section class="section" id="projects">
+        <div class="section-container">
+          <h2 class="section-title">創新項目</h2>
+          <div class="project-carousel">
+            <div class="project-grid">
+              <div class="project-card" data-tilt onclick="openModal(1)">
+                <img src="templates/營養師管理系統/img1.png" alt="營養師管理系統" />
+                <div class="card-content">
+                  <h3>營養師Line@互動管理系統</h3>
+                  <p>Line@協同管理平台，優化營養師與個案的互動體驗</p>
+                </div>
+              </div>
+              <div class="project-card" data-tilt onclick="openModal(0)">
+                <img src="templates/HealthyLife/img1.png" alt="HealthyLife" />
+                <div class="card-content">
+                  <h3>HealthyLife</h3>
+                  <p>智能健康管理平台，運用AI演算法提供個人化健康建議</p>
+                </div>
+              </div>
+
+              <div class="project-card" data-tilt onclick="openModal(1)">
+                <img src="templates/健康小管家/img1.png" alt="健康小管家" />
+                <div class="card-content">
+                  <h3>健康小管家</h3>
+                  <p>AI驅動的藥物管理助手，提升用藥安全與依從性</p>
+                </div>
+              </div>
+
+              <div class="project-card" data-tilt onclick="openModal(2)">
+                <img src="templates/美麗新生機/img1.png" alt="美麗新生機" />
+                <div class="card-content">
+                  <h3>美麗新生機</h3>
+                  <p>智能婦癌衛教系統，為患者提供全方位照護服務</p>
+                </div>
+              </div>
+
+              <div class="project-card" data-tilt onclick="openModal(3)">
+                <img src="templates/SweetLine/img1.png" alt="SweetLine" />
+                <div class="card-content">
+                  <h3>SweetLine 妊娠護航Bot</h3>
+                  <p>智慧孕程，甜蜜相隨</p>
+                </div>
+              </div>
+
+              <div class="project-card" data-tilt onclick="openModal(4)">
+                <img src="templates/智慧飲食配/img1.png" alt="智慧飲食配" />
+                <div class="card-content">
+                  <h3>智慧飲食配</h3>
+                  <p>為您量身打造的健康餐盒外送服務</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 成就時間線 -->
+
+      <section class="section" id="achievements">
+        <div class="section-container">
+            <h2 class="section-title">團隊成就</h2>
+            <div class="achievements-container">
+                <!-- 2024年度成就 -->
+                <div class="achievement-year">
+                    <div class="year-label">2024</div>
+                    <div class="achievements-grid">
+                      <div class="achievement-card">
+                        <div class="achievement-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <div class="achievement-content">
+                            <h3>耳目醫新全國生醫創新創業競賽</h3>
+                            <span class="award-type">佳作</span>
+                        </div>
+                    </div>
+                        <div class="achievement-card">
+                            <div class="achievement-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="achievement-content">
+                                <h3>第三屆保誠創新智造所</h3>
+                                <span class="award-type">評審特別獎</span>
+                            </div>
+                        </div>
+                        
+                        <div class="achievement-card">
+                            <div class="achievement-icon">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <div class="achievement-content">
+                                <h3>NTUE校園創業競賽</h3>
+                                <span class="award-type">潛力獎</span>
+                            </div>
+                        </div>
+                        
+                        <div class="achievement-card">
+                            <div class="achievement-icon">
+                                <i class="fas fa-medal"></i>
+                            </div>
+                            <div class="achievement-content">
+                                <h3>致青春‧創未來全國選拔大賽</h3>
+                                <span class="award-type">優選</span>
+                            </div>
+                        </div>
+    
+                        <div class="achievement-card">
+                            <div class="achievement-icon">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <div class="achievement-content">
+                                <h3>全國大專校院創新創業競賽</h3>
+                                <span class="award-type">佳作</span>
+                            </div>
+                        </div>
+    
+                        <div class="achievement-card">
+                            <div class="achievement-icon">
+                                <i class="fas fa-certificate"></i>
+                            </div>
+                            <div class="achievement-content">
+                                <h3>第四屆捷運盃黑客松</h3>
+                                <span class="award-type">黑捷客獎</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- 2023年度成就 -->
+                <div class="achievement-year">
+                    <div class="year-label">2023</div>
+                    <div class="achievements-grid">
+                        <div class="achievement-card">
+                            <div class="achievement-icon">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <div class="achievement-content">
+                                <h3>GSS AI Chatbot Hackathon</h3>
+                                <span class="award-type">情有獨鍾獎</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- 2022年度成就 -->
+                <div class="achievement-year">
+                    <div class="year-label">2022</div>
+                    <div class="achievements-grid">
+                        <div class="achievement-card">
+                            <div class="achievement-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="achievement-content">
+                                <h3>GSS AI Chatbot Hackathon</h3>
+                                <span class="award-type">亞軍</span>
+                            </div>
+                        </div>
+                        <div class="achievement-card">
+                            <div class="achievement-icon">
+                                <i class="fas fa-medal"></i>
+                            </div>
+                            <div class="achievement-content">
+                                <h3>全國健康科技創新創意競賽</h3>
+                                <span class="award-type">季軍</span>
+                            </div>
+                        </div>
+                        <div class="achievement-card">
+                          <div class="achievement-icon">
+                              <i class="fas fa-medal"></i>
+                          </div>
+                          <div class="achievement-content">
+                              <h3>新創盃全國大專校院企劃競賽</h3>
+                              <span class="award-type">季軍</span>
+                          </div>
+                      </div>
+                      <div class="achievement-card">
+                        <div class="achievement-icon">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="achievement-content">
+                            <h3>全國技專院校i-Life創新競賽 </h3>
+                            <span class="award-type">亞軍</span>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+      <!-- 聯絡區塊 -->
+
+      <section class="section contact-section" id="contact">
+        <div class="section-container">
+            <h2 class="section-title">聯絡我們</h2>
+            <div class="contact-container">
+              <div class="contact-info">
+                <h3>讓我們一起創造健康的未來</h3>
+              
+                <div class="contact-details">
+                  <p><i class="fas fa-envelope"></i> 暫無</p>
+                  <p><i class="fas fa-phone"></i> 暫無</p>
+                  <p>
+                    <i class="fas fa-map-marker-alt"></i> 暫無
+                  </p>
+                </div>
+              </div>
+              <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label>姓名</label>
+                    <input type="text" name="name" placeholder="請輸入您的姓名" required>
+                </div>
+                <div class="form-group">
+                    <label>電子郵件</label>
+                    <input type="email" name="email" placeholder="請輸入您的電子郵件" required>
+                </div>
+                <div class="form-group">
+                    <label>訊息</label>
+                    <textarea name="message" rows="5" placeholder="請輸入您的訊息" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <span class="btn-text">送出訊息</span>
+                    <span class="loading-spinner hidden"></span>
+                </button>
+            </form>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 模態框 -->
+    <div class="modal" id="projectModal">
+      <div class="modal-content">
+        <button class="modal-close">
+          <span class="close-icon"></span>
+        </button>
+
+        <div class="modal-layout">
+          <!-- 左側：媒體展示區 -->
+          <div class="modal-media-section">
+            <div class="media-container">
+              <img
+                id="modalImage"
+                class="modal-image"
+                src=""
+                alt="Project Image"
+              />
+              <iframe
+                id="modalVideo"
+                class="modal-video"
+                src=""
+                frameborder="0"
+                allowfullscreen
+              ></iframe>
+            </div>
+            <div class="media-thumbnails">
+              <!-- 縮圖由 JS 動態生成 -->
+            </div>
+          </div>
+
+          <!-- 右側：內容區 -->
+          <div class="modal-info-section">
+            <h2 id="modalTitle"></h2>
+            <div class="project-meta">
+              <span class="project-category"></span>
+              <span class="project-date"></span>
+            </div>
+            <div class="project-description">
+              <p id="modalDescription"></p>
+            </div>
+            <div class="project-features">
+              <h3>主要功能</h3>
+              <ul id="modalFeatures">
+                <!-- 功能列表由 JS 動態生成 -->
+              </ul>
+            </div>
+            <div class="project-links">
+              <!-- 相關連結由 JS 動態生成 -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 頁尾 -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>關於療心智能</h3>
+          <p>
+            我們致力於運用人工智能技術，為醫療保健領域帶來創新解決方案，提升全民健康福祉。
+          </p>
+        </div>
+        <div class="footer-section">
+          <h3>快速連結</h3>
+          <ul>
+            <li><a href="#about">關於我們</a></li>
+            <li><a href="#projects">創新項目</a></li>
+            <li><a href="#achievements">團隊成就</a></li>
+            <li><a href="#contact">聯絡我們</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>聯繫方式</h3>
+          <ul>
+            <li><i class="fas fa-phone"></i> 暫無</li>
+            <li><i class="fas fa-envelope"></i> 暫無</li>
+            <li><i class="fas fa-map-marker-alt"></i> 暫無</li>
+          </ul>
+        </div>
+      </div>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2024 療心智能 版權所有</p>
+      </div>
+    </footer>
+
+    <!-- 外部腳本 -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
