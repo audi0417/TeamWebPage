@@ -191,21 +191,19 @@ body {
     position: relative;
     max-width: 100%;
     overflow: hidden;
-    /* 增加上下內邊距，提供更大的拖曳空間 */
     padding: 4rem 0;
 }
 
 .project-grid {
     display: flex;
     gap: 2rem;
-    /* 增加左右內邊距，確保首尾卡片有足夠空間 */
     padding: 2rem 10%;
     cursor: grab;
     user-select: none;
     transition: transform 0.3s ease;
     /* 確保內容垂直置中 */
     align-items: center;
-    min-height: 400px;
+    min-height: 200px;
 }
 
 .project-grid:active {
@@ -732,6 +730,10 @@ footer {
 }
 
 @media (max-width: 768px) {
+    html, body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
     .hero h1 {
         font-size: 3rem;
     }
@@ -774,10 +776,30 @@ footer {
     .media-thumbnail {
         scroll-snap-align: start;
     }
+    /* 修改 project-grid 的樣式 */
+    .project-grid {
+        display: flex;
+        flex-direction: column; /* 改為垂直排列 */
+        gap: 2rem;
+        padding: 2rem;
+        transform: none; /* 移除水平移動效果 */
+        overflow-x: hidden; /* 禁止水平滾動 */
+    }
+
+    /* 修改卡片寬度為充滿容器 */
+    .project-card {
+        flex: none;
+        width: 100%;
+        margin-right: 0;
+    }
 
 }
 
 @media (max-width: 480px) {
+    html, body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
     .section {
         padding: 4rem 1rem;
     }
