@@ -819,6 +819,14 @@ footer {
     top: 1rem;
     right: 1rem;
   }
+  .project-grid {
+    display: flex;
+    flex-direction: column; /* 改為垂直排列 */
+    gap: 2rem;
+    padding: 2rem;
+    transform: none; /* 移除水平移動效果 */
+    overflow-x: hidden; /* 禁止水平滾動 */
+  }
 }
 
 /* 無障礙支援 */
