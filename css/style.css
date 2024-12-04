@@ -351,7 +351,7 @@ body {
     .year-label {
         font-size: 1.8rem;
     }
-}ㄘ
+}
 
 /* 聯絡區塊 */
 .contact-section {
@@ -779,11 +779,15 @@ footer {
         flex-direction: column;
     }
 
-    .modal-content {
-        width: 95%;
-        height: 95vh;
-        margin: 2.5vh auto;
+    .carousel-arrow {
+        display: block; /* 默認顯示 */
     }
+
+    .project-grid {
+        transform: translateX(0); /* 重置拖曳 */
+        transition: transform 0.3s ease-in-out;
+    }
+
 
     .media-thumbnails {
         scroll-snap-type: x mandatory;
@@ -792,13 +796,7 @@ footer {
     .media-thumbnail {
         scroll-snap-align: start;
     }
-    .carousel-arrow {
-        display: block;
-      }
-    .project-grid {
-        touch-action: none; /* 停用原生觸控行為 */
-        user-select: none;
-    }
+
 }
 
 @media (max-width: 480px) {

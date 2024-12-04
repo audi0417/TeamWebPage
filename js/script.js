@@ -508,3 +508,4 @@ function showNotification(message, type) {
         notification.remove();
     }, 3000);
 }
+
