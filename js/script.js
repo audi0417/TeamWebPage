@@ -159,7 +159,7 @@ particlesJS('particles-js', {
     retina_detect: true
 });
 
-// 拖曳功能
+// 拖曳功能相關變數
 const carousel = document.querySelector('.project-grid');
 let isDragging = false;
 let startPos = 0;
@@ -168,10 +168,16 @@ let prevTranslate = 0;
 let animationID = 0;
 let dragStartTime = 0;
 let dragDistance = 0;
+let hasDragged = false;
 
 // 防止圖片拖曳
 carousel.querySelectorAll('img').forEach(img => {
     img.addEventListener('dragstart', (e) => e.preventDefault());
+});
+
+// 為每個專案卡片添加點擊事件
+document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('click', handleCardClick);
 });
 
 // 觸控事件
@@ -185,17 +191,23 @@ carousel.addEventListener('mouseup', touchEnd);
 carousel.addEventListener('mouseleave', touchEnd);
 carousel.addEventListener('mousemove', touchMove);
 
-// 添加直接點擊事件處理
-carousel.addEventListener('click', handleCardClick);
-
 function touchStart(e) {
+    // 如果點擊的是專案卡片，不啟動拖拽
+    if (e.target.closest('.project-card')) {
+        return;
+    }
+    
     isDragging = true;
+    hasDragged = false;
     startPos = getPositionX(e);
     dragStartTime = Date.now();
     dragDistance = 0;
     
     animationID = requestAnimationFrame(animation);
     carousel.style.cursor = 'grabbing';
+    
+    // 阻止默認行為
+    e.preventDefault();
 }
 
 function touchMove(e) {
@@ -204,18 +216,20 @@ function touchMove(e) {
     const currentPosition = getPositionX(e);
     dragDistance = Math.abs(currentPosition - startPos);
     currentTranslate = prevTranslate + currentPosition - startPos;
+    
+    // 如果開始拖拽，標記為已拖拽
+    if (dragDistance > 5) {
+        hasDragged = true;
+    }
+    
+    e.preventDefault();
 }
 
 function touchEnd(e) {
+    if (!isDragging) return;
+    
     isDragging = false;
     cancelAnimationFrame(animationID);
-    
-    const dragDuration = Date.now() - dragStartTime;
-    
-    // 如果拖曳距離小於10px且時間小於200ms，視為點擊
-    if (dragDistance < 10 && dragDuration < 200) {
-        handleCardClick(e);
-    }
     
     // 處理拖曳結束的邊界檢查
     const maxTranslate = 0;
@@ -231,20 +245,30 @@ function touchEnd(e) {
     
     prevTranslate = currentTranslate;
     carousel.style.cursor = 'grab';
+    
+    // 如果有拖拽行為，阻止後續的點擊事件
+    if (hasDragged) {
+        setTimeout(() => {
+            hasDragged = false;
+        }, 100);
+    }
 }
 
 function handleCardClick(e) {
-    // 只有在沒有拖曳或拖曳距離很小的情況下才處理點擊
-    if (isDragging && dragDistance > 10) return;
-    
-    const card = e.target.closest('.project-card');
-    if (card) {
+    // 如果剛剛有拖拽行為，不處理點擊
+    if (hasDragged) {
         e.preventDefault();
         e.stopPropagation();
-        const index = card.getAttribute('data-project');
-        if (index !== null) {
-            openModal(parseInt(index));
-        }
+        return;
+    }
+    
+    const card = e.currentTarget;
+    const index = card.getAttribute('data-project');
+    
+    if (index !== null) {
+        e.preventDefault();
+        e.stopPropagation();
+        openModal(parseInt(index));
     }
 }
 
@@ -353,6 +377,13 @@ modal.addEventListener('click', (e) => {
     }
 });
 
+// ESC 鍵關閉模態框
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+        document.querySelector('.modal-close').click();
+    }
+});
+
 // 3D 卡片效果 - 等待DOM加載完成
 document.addEventListener('DOMContentLoaded', function() {
     if (typeof VanillaTilt !== 'undefined') {
@@ -383,6 +414,7 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.section, .timeline-item, .project-card').forEach(elem => {
     elem.style.opacity = "0";
     elem.style.transform = "translateY(30px)";
+    elem.style.transition = "opacity 0.6s ease, transform 0.6s ease";
     observer.observe(elem);
 });
 
@@ -450,3 +482,42 @@ function showNotification(message, type) {
         notification.remove();
     }, 3000);
 }
+
+// 鍵盤導航支援
+document.addEventListener('keydown', (e) => {
+    if (modal.classList.contains('active')) {
+        if (e.key === 'ArrowLeft' && currentMediaIndex > 0) {
+            switchMedia(currentMediaIndex - 1);
+        } else if (e.key === 'ArrowRight') {
+            const maxIndex = currentProject.images.length + (currentProject.video ? 1 : 0) - 1;
+            if (currentMediaIndex < maxIndex) {
+                switchMedia(currentMediaIndex + 1);
+            }
+        }
+    }
+});
+
+// 響應式處理
+function handleResize() {
+    if (window.innerWidth <= 768) {
+        // 移動設備上重置拖拽狀態
+        currentTranslate = 0;
+        prevTranslate = 0;
+        setSliderPosition();
+    }
+}
+
+window.addEventListener('resize', handleResize);
+
+// 頁面載入完成後的初始化
+window.addEventListener('load', () => {
+    // 確保所有圖片都已載入
+    const images = document.querySelectorAll('img');
+    images.forEach(img => {
+        if (!img.complete) {
+            img.addEventListener('load', () => {
+                // 圖片載入完成後的處理
+            });
+        }
+    });
+});
