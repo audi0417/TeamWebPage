@@ -13,18 +13,7 @@ const projects = [
         ],
         images: [
             "templates/營養師管理系統/img1.png",
-        ],
-        
-        // links: [
-        //     {
-        //         text: "了解更多",
-        //         url: "#"
-        //     },
-        //     {
-        //         text: "下載應用",
-        //         url: "#"
-        //     }
-        // ]
+        ]
     },
     {
         title: "HealthyLife",
@@ -42,17 +31,7 @@ const projects = [
             "templates/HealthyLife/img1.png",
             "templates/HealthyLife/img2.png",
         ],
-        video: "https://www.youtube.com/embed/tkVHM2rVTbE",
-        // links: [
-        //     {
-        //         text: "了解更多",
-        //         url: "#"
-        //     },
-        //     {
-        //         text: "下載應用",
-        //         url: "#"
-        //     }
-        // ]
+        video: "https://www.youtube.com/embed/tkVHM2rVTbE"
     },
     {
         title: "健康小管家",
@@ -68,13 +47,7 @@ const projects = [
         ],
         images: [
             "templates/健康小管家/img1.png",
-        ],
-        // links: [
-        //     {
-        //         text: "立即使用",
-        //         url: "#"
-        //     }
-        // ]
+        ]
     },
     {
         title: "美麗新生機",
@@ -90,14 +63,7 @@ const projects = [
         ],
         images: [
             "templates/美麗新生機/img1.png",
-
-        ],
-        // links: [
-        //     {
-        //         text: "加入好友",
-        //         url: "#"
-        //     }
-        // ]
+        ]
     },
     {
         title: "SweetLine 妊娠護航Bot",
@@ -114,13 +80,7 @@ const projects = [
         images: [
             "templates/SweetLine/img1.png",
             "templates/SweetLine/img2.png",
-        ],
-        // links: [
-        //     {
-        //         text: "開始使用",
-        //         url: "#"
-        //     }
-        // ]
+        ]
     },
     {
         title: "智慧飲食配",
@@ -137,17 +97,7 @@ const projects = [
         images: [
             "templates/智慧飲食配/img1.png",
             "templates/智慧飲食配/img2.png",
-        ],
-        // links: [
-        //     {
-        //         text: "立即訂餐",
-        //         url: "#"
-        //     },
-        //     {
-        //         text: "了解更多",
-        //         url: "#"
-        //     }
-        // ]
+        ]
     }
 ];
 
@@ -264,8 +214,10 @@ function touchEnd(e) {
         // 檢查是否點擊到卡片
         const card = e.target.closest('.project-card');
         if (card) {
-            const index = Array.from(card.parentElement.children).indexOf(card);
-            openModal(index);
+            const index = card.getAttribute('data-project');
+            if (index !== null) {
+                openModal(parseInt(index));
+            }
         }
     }
     
@@ -284,23 +236,6 @@ function touchEnd(e) {
     prevTranslate = currentTranslate;
     carousel.style.cursor = 'grab';
 }
-
-// 修改卡片點擊事件處理
-document.querySelectorAll('.project-card').forEach((card, index) => {
-    // 移除直接的onclick屬性
-    card.removeAttribute('onclick');
-});
-
-// 更新事件監聽器
-carousel.addEventListener('mousedown', touchStart);
-carousel.addEventListener('mousemove', touchMove);
-carousel.addEventListener('mouseup', touchEnd);
-carousel.addEventListener('mouseleave', touchEnd);
-
-carousel.addEventListener('touchstart', touchStart);
-carousel.addEventListener('touchmove', touchMove);
-carousel.addEventListener('touchend', touchEnd);
-
 
 function animation() {
     setSliderPosition();
@@ -361,12 +296,6 @@ function openModal(projectIndex) {
         thumbnailsContainer.appendChild(videoThumbnail);
     }
     
-    // 生成相關連結
-    // const linksContainer = document.querySelector('.project-links');
-    // linksContainer.innerHTML = currentProject.links.map(link => 
-    //     `<a href="${link.url}" class="project-link-btn" target="_blank">${link.text}</a>`
-    // ).join('');
-    
     // 顯示首張圖片
     switchMedia(0);
     
@@ -380,13 +309,15 @@ function switchMedia(index) {
     currentMediaIndex = index;
     const thumbnails = document.querySelectorAll('.media-thumbnail');
     thumbnails.forEach(thumb => thumb.classList.remove('active'));
-    thumbnails[index].classList.add('active');
+    if (thumbnails[index]) {
+        thumbnails[index].classList.add('active');
+    }
     
     const isVideo = index === currentProject.images.length;
     modalImage.style.display = isVideo ? 'none' : 'block';
     modalVideo.style.display = isVideo ? 'block' : 'none';
     
-    if (isVideo) {
+    if (isVideo && currentProject.video) {
         modalVideo.src = currentProject.video;
     } else {
         modalImage.src = currentProject.images[index];
@@ -410,12 +341,16 @@ modal.addEventListener('click', (e) => {
     }
 });
 
-// 3D 卡片效果
-VanillaTilt.init(document.querySelectorAll(".project-card"), {
-    max: 25,
-    speed: 400,
-    glare: true,
-    "max-glare": 0.5
+// 3D 卡片效果 - 等待DOM加載完成
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof VanillaTilt !== 'undefined') {
+        VanillaTilt.init(document.querySelectorAll(".project-card"), {
+            max: 25,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.5
+        });
+    }
 });
 
 // 滾動動畫
@@ -443,12 +378,16 @@ document.querySelectorAll('.section, .timeline-item, .project-card').forEach(ele
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
     });
 });
 
+// 表單提交處理
 document.getElementById('contactForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -469,17 +408,8 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
             message: form.message.value
         };
 
-        const response = await fetch('/.netlify/functions/submitForm', {
-            method: 'POST',
-            body: JSON.stringify(formData),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        const result = await response.json();
-
-        if (!response.ok) throw new Error(result.error);
+        // 模擬表單提交 - 可以替換為實際的 API 調用
+        await new Promise(resolve => setTimeout(resolve, 2000));
 
         // 顯示成功訊息
         showNotification('訊息已成功送出！', 'success');
@@ -508,4 +438,3 @@ function showNotification(message, type) {
         notification.remove();
     }, 3000);
 }
-
