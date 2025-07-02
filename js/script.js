@@ -185,6 +185,9 @@ carousel.addEventListener('mouseup', touchEnd);
 carousel.addEventListener('mouseleave', touchEnd);
 carousel.addEventListener('mousemove', touchMove);
 
+// 添加直接點擊事件處理
+carousel.addEventListener('click', handleCardClick);
+
 function touchStart(e) {
     isDragging = true;
     startPos = getPositionX(e);
@@ -211,14 +214,7 @@ function touchEnd(e) {
     
     // 如果拖曳距離小於10px且時間小於200ms，視為點擊
     if (dragDistance < 10 && dragDuration < 200) {
-        // 檢查是否點擊到卡片
-        const card = e.target.closest('.project-card');
-        if (card) {
-            const index = card.getAttribute('data-project');
-            if (index !== null) {
-                openModal(parseInt(index));
-            }
-        }
+        handleCardClick(e);
     }
     
     // 處理拖曳結束的邊界檢查
@@ -235,6 +231,21 @@ function touchEnd(e) {
     
     prevTranslate = currentTranslate;
     carousel.style.cursor = 'grab';
+}
+
+function handleCardClick(e) {
+    // 只有在沒有拖曳或拖曳距離很小的情況下才處理點擊
+    if (isDragging && dragDistance > 10) return;
+    
+    const card = e.target.closest('.project-card');
+    if (card) {
+        e.preventDefault();
+        e.stopPropagation();
+        const index = card.getAttribute('data-project');
+        if (index !== null) {
+            openModal(parseInt(index));
+        }
+    }
 }
 
 function animation() {
@@ -321,6 +332,7 @@ function switchMedia(index) {
         modalVideo.src = currentProject.video;
     } else {
         modalImage.src = currentProject.images[index];
+        modalImage.alt = currentProject.title;
     }
 }
 
