@@ -13,7 +13,18 @@ const projects = [
         ],
         images: [
             "templates/營養師管理系統/img1.png",
-        ]
+        ],
+        
+        // links: [
+        //     {
+        //         text: "了解更多",
+        //         url: "#"
+        //     },
+        //     {
+        //         text: "下載應用",
+        //         url: "#"
+        //     }
+        // ]
     },
     {
         title: "HealthyLife",
@@ -31,7 +42,17 @@ const projects = [
             "templates/HealthyLife/img1.png",
             "templates/HealthyLife/img2.png",
         ],
-        video: "https://www.youtube.com/embed/tkVHM2rVTbE"
+        video: "https://www.youtube.com/embed/tkVHM2rVTbE",
+        // links: [
+        //     {
+        //         text: "了解更多",
+        //         url: "#"
+        //     },
+        //     {
+        //         text: "下載應用",
+        //         url: "#"
+        //     }
+        // ]
     },
     {
         title: "健康小管家",
@@ -47,7 +68,13 @@ const projects = [
         ],
         images: [
             "templates/健康小管家/img1.png",
-        ]
+        ],
+        // links: [
+        //     {
+        //         text: "立即使用",
+        //         url: "#"
+        //     }
+        // ]
     },
     {
         title: "美麗新生機",
@@ -63,7 +90,14 @@ const projects = [
         ],
         images: [
             "templates/美麗新生機/img1.png",
-        ]
+
+        ],
+        // links: [
+        //     {
+        //         text: "加入好友",
+        //         url: "#"
+        //     }
+        // ]
     },
     {
         title: "SweetLine 妊娠護航Bot",
@@ -80,7 +114,13 @@ const projects = [
         images: [
             "templates/SweetLine/img1.png",
             "templates/SweetLine/img2.png",
-        ]
+        ],
+        // links: [
+        //     {
+        //         text: "開始使用",
+        //         url: "#"
+        //     }
+        // ]
     },
     {
         title: "智慧飲食配",
@@ -97,7 +137,17 @@ const projects = [
         images: [
             "templates/智慧飲食配/img1.png",
             "templates/智慧飲食配/img2.png",
-        ]
+        ],
+        // links: [
+        //     {
+        //         text: "立即訂餐",
+        //         url: "#"
+        //     },
+        //     {
+        //         text: "了解更多",
+        //         url: "#"
+        //     }
+        // ]
     }
 ];
 
@@ -159,7 +209,7 @@ particlesJS('particles-js', {
     retina_detect: true
 });
 
-// 拖曳功能相關變數
+// 拖曳功能
 const carousel = document.querySelector('.project-grid');
 let isDragging = false;
 let startPos = 0;
@@ -168,16 +218,10 @@ let prevTranslate = 0;
 let animationID = 0;
 let dragStartTime = 0;
 let dragDistance = 0;
-let hasDragged = false;
 
 // 防止圖片拖曳
 carousel.querySelectorAll('img').forEach(img => {
     img.addEventListener('dragstart', (e) => e.preventDefault());
-});
-
-// 為每個專案卡片添加點擊事件
-document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('click', handleCardClick);
 });
 
 // 觸控事件
@@ -192,22 +236,13 @@ carousel.addEventListener('mouseleave', touchEnd);
 carousel.addEventListener('mousemove', touchMove);
 
 function touchStart(e) {
-    // 如果點擊的是專案卡片，不啟動拖拽
-    if (e.target.closest('.project-card')) {
-        return;
-    }
-    
     isDragging = true;
-    hasDragged = false;
     startPos = getPositionX(e);
     dragStartTime = Date.now();
     dragDistance = 0;
     
     animationID = requestAnimationFrame(animation);
     carousel.style.cursor = 'grabbing';
-    
-    // 阻止默認行為
-    e.preventDefault();
 }
 
 function touchMove(e) {
@@ -216,20 +251,23 @@ function touchMove(e) {
     const currentPosition = getPositionX(e);
     dragDistance = Math.abs(currentPosition - startPos);
     currentTranslate = prevTranslate + currentPosition - startPos;
-    
-    // 如果開始拖拽，標記為已拖拽
-    if (dragDistance > 5) {
-        hasDragged = true;
-    }
-    
-    e.preventDefault();
 }
 
 function touchEnd(e) {
-    if (!isDragging) return;
-    
     isDragging = false;
     cancelAnimationFrame(animationID);
+    
+    const dragDuration = Date.now() - dragStartTime;
+    
+    // 如果拖曳距離小於10px且時間小於200ms，視為點擊
+    if (dragDistance < 10 && dragDuration < 200) {
+        // 檢查是否點擊到卡片
+        const card = e.target.closest('.project-card');
+        if (card) {
+            const index = Array.from(card.parentElement.children).indexOf(card);
+            openModal(index);
+        }
+    }
     
     // 處理拖曳結束的邊界檢查
     const maxTranslate = 0;
@@ -245,32 +283,24 @@ function touchEnd(e) {
     
     prevTranslate = currentTranslate;
     carousel.style.cursor = 'grab';
-    
-    // 如果有拖拽行為，阻止後續的點擊事件
-    if (hasDragged) {
-        setTimeout(() => {
-            hasDragged = false;
-        }, 100);
-    }
 }
 
-function handleCardClick(e) {
-    // 如果剛剛有拖拽行為，不處理點擊
-    if (hasDragged) {
-        e.preventDefault();
-        e.stopPropagation();
-        return;
-    }
-    
-    const card = e.currentTarget;
-    const index = card.getAttribute('data-project');
-    
-    if (index !== null) {
-        e.preventDefault();
-        e.stopPropagation();
-        openModal(parseInt(index));
-    }
-}
+// 修改卡片點擊事件處理
+document.querySelectorAll('.project-card').forEach((card, index) => {
+    // 移除直接的onclick屬性
+    card.removeAttribute('onclick');
+});
+
+// 更新事件監聽器
+carousel.addEventListener('mousedown', touchStart);
+carousel.addEventListener('mousemove', touchMove);
+carousel.addEventListener('mouseup', touchEnd);
+carousel.addEventListener('mouseleave', touchEnd);
+
+carousel.addEventListener('touchstart', touchStart);
+carousel.addEventListener('touchmove', touchMove);
+carousel.addEventListener('touchend', touchEnd);
+
 
 function animation() {
     setSliderPosition();
@@ -331,6 +361,12 @@ function openModal(projectIndex) {
         thumbnailsContainer.appendChild(videoThumbnail);
     }
     
+    // 生成相關連結
+    // const linksContainer = document.querySelector('.project-links');
+    // linksContainer.innerHTML = currentProject.links.map(link => 
+    //     `<a href="${link.url}" class="project-link-btn" target="_blank">${link.text}</a>`
+    // ).join('');
+    
     // 顯示首張圖片
     switchMedia(0);
     
@@ -344,19 +380,16 @@ function switchMedia(index) {
     currentMediaIndex = index;
     const thumbnails = document.querySelectorAll('.media-thumbnail');
     thumbnails.forEach(thumb => thumb.classList.remove('active'));
-    if (thumbnails[index]) {
-        thumbnails[index].classList.add('active');
-    }
+    thumbnails[index].classList.add('active');
     
     const isVideo = index === currentProject.images.length;
     modalImage.style.display = isVideo ? 'none' : 'block';
     modalVideo.style.display = isVideo ? 'block' : 'none';
     
-    if (isVideo && currentProject.video) {
+    if (isVideo) {
         modalVideo.src = currentProject.video;
     } else {
         modalImage.src = currentProject.images[index];
-        modalImage.alt = currentProject.title;
     }
 }
 
@@ -377,23 +410,12 @@ modal.addEventListener('click', (e) => {
     }
 });
 
-// ESC 鍵關閉模態框
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('active')) {
-        document.querySelector('.modal-close').click();
-    }
-});
-
-// 3D 卡片效果 - 等待DOM加載完成
-document.addEventListener('DOMContentLoaded', function() {
-    if (typeof VanillaTilt !== 'undefined') {
-        VanillaTilt.init(document.querySelectorAll(".project-card"), {
-            max: 25,
-            speed: 400,
-            glare: true,
-            "max-glare": 0.5
-        });
-    }
+// 3D 卡片效果
+VanillaTilt.init(document.querySelectorAll(".project-card"), {
+    max: 25,
+    speed: 400,
+    glare: true,
+    "max-glare": 0.5
 });
 
 // 滾動動畫
@@ -414,7 +436,6 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.section, .timeline-item, .project-card').forEach(elem => {
     elem.style.opacity = "0";
     elem.style.transform = "translateY(30px)";
-    elem.style.transition = "opacity 0.6s ease, transform 0.6s ease";
     observer.observe(elem);
 });
 
@@ -422,16 +443,12 @@ document.querySelectorAll('.section, .timeline-item, .project-card').forEach(ele
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth'
-            });
-        }
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
     });
 });
 
-// 表單提交處理
 document.getElementById('contactForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -452,8 +469,17 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
             message: form.message.value
         };
 
-        // 模擬表單提交 - 可以替換為實際的 API 調用
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        const response = await fetch('/.netlify/functions/submitForm', {
+            method: 'POST',
+            body: JSON.stringify(formData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) throw new Error(result.error);
 
         // 顯示成功訊息
         showNotification('訊息已成功送出！', 'success');
@@ -482,42 +508,3 @@ function showNotification(message, type) {
         notification.remove();
     }, 3000);
 }
-
-// 鍵盤導航支援
-document.addEventListener('keydown', (e) => {
-    if (modal.classList.contains('active')) {
-        if (e.key === 'ArrowLeft' && currentMediaIndex > 0) {
-            switchMedia(currentMediaIndex - 1);
-        } else if (e.key === 'ArrowRight') {
-            const maxIndex = currentProject.images.length + (currentProject.video ? 1 : 0) - 1;
-            if (currentMediaIndex < maxIndex) {
-                switchMedia(currentMediaIndex + 1);
-            }
-        }
-    }
-});
-
-// 響應式處理
-function handleResize() {
-    if (window.innerWidth <= 768) {
-        // 移動設備上重置拖拽狀態
-        currentTranslate = 0;
-        prevTranslate = 0;
-        setSliderPosition();
-    }
-}
-
-window.addEventListener('resize', handleResize);
-
-// 頁面載入完成後的初始化
-window.addEventListener('load', () => {
-    // 確保所有圖片都已載入
-    const images = document.querySelectorAll('img');
-    images.forEach(img => {
-        if (!img.complete) {
-            img.addEventListener('load', () => {
-                // 圖片載入完成後的處理
-            });
-        }
-    });
-});
