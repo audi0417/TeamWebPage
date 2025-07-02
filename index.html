@@ -47,50 +47,15 @@
         </div>
       </section>
 
-      <!-- 願景區塊 - 重新設計 -->
+      <!-- 願景區塊 -->
       <section class="section" id="vision">
         <div class="section-container">
           <h2 class="section-title">團隊願景</h2>
-          <div class="vision-section">
-            <div class="vision-content">
-              <p class="vision-text">
-                療心智能團隊長期深耕於健康促進與預防醫學的相關領域，過去常聚焦於銀髮族群的健康需求，推出長照媒合照護平台、遊戲化失智預防APP、服藥提醒 Linebot等產品服務，並參與競賽榮獲各項殊榮，同時也參與過多項孵化計畫，累積豐富的實務經驗。致力於個人化、智能化的服務開發，針對國內各類族群如慢性病患、長者、婦癌患者，解決其醫療與照護需求，提升全民健康意識。
-              </p>
-              
-              <div class="vision-highlights">
-                <div class="highlight-card">
-                  <div class="highlight-icon">
-                    <i class="fas fa-brain"></i>
-                  </div>
-                  <h3>智慧醫療</h3>
-                  <p>運用人工智慧技術，為醫療照護帶來創新解決方案</p>
-                </div>
-                
-                <div class="highlight-card">
-                  <div class="highlight-icon">
-                    <i class="fas fa-heart"></i>
-                  </div>
-                  <h3>全齡照護</h3>
-                  <p>針對不同年齡層提供個人化的健康管理服務</p>
-                </div>
-                
-                <div class="highlight-card">
-                  <div class="highlight-icon">
-                    <i class="fas fa-users"></i>
-                  </div>
-                  <h3>團隊協作</h3>
-                  <p>結合專業醫療知識與技術創新，打造最佳健康服務</p>
-                </div>
-                
-                <div class="highlight-card">
-                  <div class="highlight-icon">
-                    <i class="fas fa-award"></i>
-                  </div>
-                  <h3>卓越成就</h3>
-                  <p>多項競賽獲獎，豐富的實務經驗與創新能力</p>
-                </div>
-              </div>
-            </div>
+          <div class="vision-content">
+            <p>
+              療心智能團隊長期深耕於健康促進與預防醫學的相關領域，過去常聚焦於銀髮族群的健康需求，推出長照媒合照護平台、遊戲化失智預防APP、服藥提醒
+              Linebot等產品服務，並參與競賽榮獲各項殊榮，同時也參與過多項孵化計畫，累積豐富的實務經驗。致力於個人化、智能化的服務開發，針對國內各類族群如慢性病患、長者、婦癌患者，解決其醫療與照護需求，提升全民健康意識。
+            </p>
           </div>
         </div>
       </section>
@@ -101,7 +66,7 @@
           <h2 class="section-title">創新項目</h2>
           <div class="project-carousel">
             <div class="project-grid">
-              <div class="project-card" data-tilt data-project="0">
+              <div class="project-card" data-tilt onclick="openModal(1)">
                 <img
                   src="templates/營養師管理系統/img1.png"
                   alt="營養師管理系統"
@@ -111,7 +76,7 @@
                   <p>Line@協同管理平台，優化營養師與個案的互動體驗</p>
                 </div>
               </div>
-              <div class="project-card" data-tilt data-project="1">
+              <div class="project-card" data-tilt onclick="openModal(0)">
                 <img src="templates/HealthyLife/img1.png" alt="HealthyLife" />
                 <div class="card-content">
                   <h3>HealthyLife</h3>
@@ -119,7 +84,7 @@
                 </div>
               </div>
 
-              <div class="project-card" data-tilt data-project="2">
+              <div class="project-card" data-tilt onclick="openModal(1)">
                 <img src="templates/健康小管家/img1.png" alt="健康小管家" />
                 <div class="card-content">
                   <h3>健康小管家</h3>
@@ -127,7 +92,7 @@
                 </div>
               </div>
 
-              <div class="project-card" data-tilt data-project="3">
+              <div class="project-card" data-tilt onclick="openModal(2)">
                 <img src="templates/美麗新生機/img1.png" alt="美麗新生機" />
                 <div class="card-content">
                   <h3>美麗新生機</h3>
@@ -135,7 +100,7 @@
                 </div>
               </div>
 
-              <div class="project-card" data-tilt data-project="4">
+              <div class="project-card" data-tilt onclick="openModal(3)">
                 <img src="templates/SweetLine/img1.png" alt="SweetLine" />
                 <div class="card-content">
                   <h3>SweetLine 妊娠護航Bot</h3>
@@ -143,7 +108,7 @@
                 </div>
               </div>
 
-              <div class="project-card" data-tilt data-project="5">
+              <div class="project-card" data-tilt onclick="openModal(4)">
                 <img src="templates/智慧飲食配/img1.png" alt="智慧飲食配" />
                 <div class="card-content">
                   <h3>智慧飲食配</h3>
@@ -156,10 +121,12 @@
       </section>
 
       <!-- 成就時間線 -->
+
       <section class="section" id="achievements">
         <div class="section-container">
           <h2 class="section-title">團隊成就</h2>
           <div class="achievements-container">
+                      <div class="achievements-container">
             <!-- 2025年度成就 -->
             <div class="achievement-year">
               <div class="year-label">2025</div>
@@ -310,8 +277,8 @@
           </div>
         </div>
       </section>
-
       <!-- 聯絡區塊 -->
+
       <section class="section contact-section" id="contact">
         <div class="section-container">
           <h2 class="section-title">聯絡我們</h2>
@@ -365,7 +332,9 @@
       <!-- 模態框 -->
       <div class="modal" id="projectModal">
         <div class="modal-content">
-          <button class="modal-close"></button>
+          <button class="modal-close">
+            <span class="close-icon"></span>
+          </button>
 
           <div class="modal-layout">
             <!-- 左側：媒體展示區 -->
@@ -375,7 +344,7 @@
                   id="modalImage"
                   class="modal-image"
                   src=""
-                  alt=""
+                  alt="Project Image"
                 />
                 <iframe
                   id="modalVideo"
@@ -414,7 +383,6 @@
         </div>
       </div>
     </div>
-    
     <!-- 頁尾 -->
     <footer>
       <div class="footer-content">
@@ -443,11 +411,11 @@
         </div>
       </div>
       <div class="social-links">
-        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-        <a href="https://www.instagram.com/healthymind.tech?igsh=MTR2aDd2ODl2d2dueQ%3D%3D&utm_source=qr" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.threads.com/@healthymind.tech?igshid=NTc4MTIwNjQ2YQ==" aria-label="Threads" class="threads-icon"></a>
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.instagram.com/healthymind.tech?igsh=MTR2aDd2ODl2d2dueQ%3D%3D&utm_source=qr"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.threads.com/@healthymind.tech?igshid=NTc4MTIwNjQ2YQ=="><i class="fa-brands fa-threads"></i></a>
       </div>
       <div class="copyright">
         <p>&copy; 2024 療心智能 版權所有</p>
