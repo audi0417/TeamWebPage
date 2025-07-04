@@ -71,7 +71,20 @@ body {
   background: var(--gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  display: flex; /* 讓 logo 文字和圖示在同一行 */
+  align-items: center; /* 垂直居中 */
+  gap: 0.5rem; /* 圖示和文字之間的間距 */
 }
+
+/* 導航欄中的 Logo 圖片樣式 */
+.navbar-logo {
+  height: 40px; /* 固定 Logo 的高度，您可以根據需要調整數值 */
+  width: auto; /* 保持圖片的原始寬高比例，防止變形 */
+  max-height: 50px; /* 防止 Logo 在不同螢幕尺寸下過大 */
+  margin-right: 10px; /* Logo 與文字之間的間距 */
+  vertical-align: middle; /* 垂直對齊，讓 Logo 與文字在同一水平線上 */
+}
+
 
 .nav-links {
   display: flex;
@@ -164,75 +177,121 @@ body {
 }
 
 /* 願景區塊 - 重新設計 */
-.vision-section {
-  max-width: 1200px;
-  margin: 0 auto;
-  position: relative;
-}
-
+/* 移除 .vision-content 的背景和邊框，使其不再是毛玻璃效果的容器 */
 .vision-content {
-  background: var(--glass);
-  padding: 4rem;
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 245, 255, 0.2);
-  position: relative;
-  overflow: hidden;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  backdrop-filter: none;
+  border: none;
+  box-shadow: none;
+  position: static; /* 確保它不影響佈局 */
+  overflow: visible; /* 確保內容不會被隱藏 */
+  display: block; /* 恢復為塊級元素，不再是 flex 容器 */
+  flex-direction: unset;
+  gap: unset;
+  align-items: unset;
 }
 
-.vision-content::before {
-  content: "";
+.vision-content::before,
+.vision-content::after {
+  content: none; /* 移除偽元素 */
+}
+
+/* 新增的願景內容佈局容器 */
+.vision-content-layout {
+  display: flex; /* 使用 Flexbox 佈局 */
+  flex-wrap: wrap; /* 允許換行 */
+  gap: 3rem; /* 左右欄之間的間距 */
+  align-items: flex-start; /* 頂部對齊 */
+}
+
+.vision-text-column {
+  flex: 1; /* 佔據可用空間 */
+  min-width: 300px; /* 最小寬度，防止在小螢幕上過窄 */
+  max-width: 60%; /* 限制文字欄位最大寬度 */
+  text-align: left; /* 文字置左 */
+}
+
+/* 新增的文字內容容器樣式 */
+.vision-text-area {
+  margin: 0 0 1rem 0; /* 調整為左對齊，並縮小與下方內文的間距 */
+  padding: 0; /* 移除內邊距 */
+}
+
+/* 打字特效相關樣式 */
+.revealable-text {
+  position: relative;
+  display: block; /* 讓容器佔據整行 */
+  width: 100%; /* 確保佔滿父容器寬度 */
+  margin: 0; /* 移除自動外邊距 */
+}
+
+.revealable-text__text-holder {
+  position: relative;
+  display: block; /* 確保 holder 也能佔據整行 */
+  width: 100%;
+}
+
+.revealable-text__text {
+  white-space: pre-wrap; /* 保持換行和空格 */
+  line-height: 1.3; /* 確保行高與 vision-main-text 一致 */
+  font-size: 3.5rem; /* 確保字體大小與 vision-main-text 一致 */
+  font-weight: 700; /* 確保字重與 vision-main-text 一致 */
+  color: var(--light); /* 確保顏色與 vision-main-text 一致 */
+  text-align: left; /* 文字置左 */
+}
+
+.revealable-text__text--animated {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(45deg, rgba(0, 245, 255, 0.1), transparent);
-  pointer-events: none;
+  overflow: hidden; /* 隱藏超出 clip-path 的部分 */
+  width: 100%; /* 確保動畫文字佔據與 ghost text 相同的寬度 */
 }
 
-.vision-content::after {
-  content: "";
-  position: absolute;
-  top: -50%;
-  right: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(123, 102, 255, 0.1) 0%, transparent 70%);
-  animation: float 6s ease-in-out infinite;
-  pointer-events: none;
+.revealable-text__text--ghost {
+  visibility: hidden; /* 隱藏 ghost text 但保留其佔位 */
+  opacity: 0; /* 確保完全透明 */
+  position: static; /* 讓它佔據正常文檔流空間 */
 }
 
-.vision-text {
-  position: relative;
-  z-index: 2;
-  font-size: 1.2rem;
+.revealable-text__letter {
+  display: inline-block; /* 讓每個字母獨立控制 */
+  clip-path: inset(0% 100% 0% 0%); /* 初始狀態：完全隱藏 */
+  /* transition: clip-path 0.3s ease-out; /* GSAP 會處理動畫，這裡可以移除 */
+}
+
+
+.vision-main-text { /* 這個類別現在主要用於字體大小、字重和顏色 */
+  font-size: 3.5rem; /* 大標題字體大小 */
+  font-weight: 700; /* 加粗 */
+  line-height: 1.3;
+  margin-bottom: 0.5rem; /* 縮小與下方內文的間距 */
+  color: var(--light); /* 保持亮色 */
+}
+
+.vision-sub-text {
+  font-size: 1.1rem; /* 小內文字體大小 */
   line-height: 1.8;
-  text-align: justify;
-  color: var(--light);
+  color: rgba(240, 240, 245, 0.9); /* 稍微淡一點的顏色 */
+  max-width: 800px; /* 限制內文最大寬度 */
+  margin: 0; /* 確保置左 */
 }
 
-.vision-text::first-letter {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: var(--primary);
-  float: left;
-  line-height: 1;
-  margin: 0.1rem 0.5rem 0 0;
-}
 
-.vision-highlights {
+.vision-highlights-column {
+  flex: 1; /* 佔據剩餘可用空間 */
+  min-width: 300px; /* 最小寬度，防止在小螢幕上過窄 */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
-  position: relative;
-  z-index: 2;
+  grid-template-columns: repeat(2, 1fr); /* 兩行兩列 */
+  gap: 1.5rem; /* 卡片間距 */
+  margin-top: 0; /* 移除與上方文字區塊的間距，由父容器的 gap 控制 */
 }
 
 .highlight-card {
   background: rgba(255, 255, 255, 0.05);
-  padding: 2rem;
+  padding: 1.5rem; /* 調整內邊距 */
   border-radius: 15px;
   border: 1px solid rgba(0, 245, 255, 0.1);
   text-align: center;
@@ -263,29 +322,82 @@ body {
 }
 
 .highlight-icon {
-  width: 60px;
-  height: 60px;
+  width: 50px; /* 調整圖標大小 */
+  height: 50px;
   background: var(--gradient);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 1rem;
-  font-size: 1.8rem;
+  margin: 0 auto 0.8rem; /* 調整間距 */
+  font-size: 1.5rem; /* 調整圖標字體大小 */
   color: white;
 }
 
 .highlight-card h3 {
   color: var(--primary);
-  margin-bottom: 1rem;
-  font-size: 1.3rem;
+  margin-bottom: 0.5rem; /* 調整間距 */
+  font-size: 1.2rem; /* 調整字體大小 */
 }
 
 .highlight-card p {
-  font-size: 1rem;
+  font-size: 0.95rem; /* 調整字體大小 */
   line-height: 1.6;
   color: rgba(240, 240, 245, 0.9);
 }
+
+/* 產品介紹區塊 */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.product-card {
+  background: var(--glass);
+  border-radius: 20px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 水平置中內容 */
+  text-align: center; /* 文本置中 */
+  padding: 2rem;
+}
+
+.product-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 245, 255, 0.2);
+}
+
+.product-icon {
+  width: 70px;
+  height: 70px;
+  background: var(--gradient);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: white;
+  margin-bottom: 1.5rem;
+}
+
+.product-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+
+.product-card p {
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
 
 /* 專案展示 */
 .project-carousel {
@@ -360,53 +472,76 @@ body {
   opacity: 0.9;
 }
 
-/* 成就時間線 */
-.achievements-container {
-  max-width: 1200px;
-  margin: 0 auto;
+/* 團隊成就區塊 - 跑馬燈樣式 (三層次) */
+.achievements-marquee-wrapper {
+  overflow: hidden; /* 隱藏超出部分的內容 */
+  padding: 2rem 0; /* 留出一些垂直空間 */
+  /* 移除舊有的背景、邊框和陰影 */
+  /* background: rgba(255, 255, 255, 0.02); */
+  /* border-radius: 20px; */
+  /* border: 1px solid rgba(0, 245, 255, 0.1); */
+  /* box-shadow: 0 0 20px rgba(0, 245, 255, 0.1); */
+  
+  display: flex;
+  flex-direction: column; /* 讓三層垂直堆疊 */
+  gap: 1.5rem; /* 每層之間的間距 */
+
+  /* 新增兩側漸變透明效果 */
+  mask-image: linear-gradient(to right, 
+              transparent 0%, 
+              white 10%, 
+              white 90%, 
+              transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, 
+                      transparent 0%, 
+                      white 10%, 
+                      white 90%, 
+                      transparent 100%);
 }
 
-.achievement-year {
-  margin-bottom: 4rem;
+.achievements-marquee-layer {
+  display: flex; /* 確保軌道內容在同一行 */
+  width: fit-content; /* 讓內容寬度自適應 */
 }
 
-.year-label {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--primary);
-  margin-bottom: 2rem;
-  position: relative;
-  display: inline-block;
-  padding-right: 3rem;
+.achievements-marquee-track {
+  display: flex;
+  flex-shrink: 0; /* 防止軌道內的內容縮小 */
+  gap: 2rem; /* 卡片間距 */
+  animation: marquee-animation 60s linear infinite; /* 基礎動畫 */
+  white-space: nowrap; /* 防止內容換行 */
 }
 
-.year-label::after {
-  content: "";
-  position: absolute;
-  left: 100%;
-  top: 50%;
-  height: 2px;
-  width: 100vw;
-  background: var(--gradient);
-  opacity: 0.3;
+/* 讓不同層的速度和方向不同 */
+.achievements-marquee-layer:nth-child(1) .achievements-marquee-track {
+  animation-duration: 60s; /* 較慢 */
+  animation-direction: normal;
 }
 
-.achievements-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+.achievements-marquee-layer:nth-child(2) .achievements-marquee-track {
+  animation-duration: 75s; /* 中速 */
+  animation-direction: reverse; /* 反向滾動 */
 }
+
+.achievements-marquee-layer:nth-child(3) .achievements-marquee-track {
+  animation-duration: 90s; /* 較快 */
+  animation-direction: normal;
+}
+
 
 .achievement-card {
-  background: var(--glass);
+  flex-shrink: 0; /* 防止卡片縮小 */
+  min-width: 250px; /* 最小寬度 */
+  max-width: 400px; /* 最大寬度，防止過長 */
+  background: var(--glass); /* 保留卡片本身的玻璃效果 */
   border-radius: 15px;
   padding: 1.5rem;
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1); /* 保留卡片本身的邊框 */
   transition: all 0.3s ease;
+  white-space: normal; /* 允許卡片內容換行 */
 }
 
 .achievement-card:hover {
@@ -441,6 +576,17 @@ body {
   color: var(--primary);
   font-weight: 500;
 }
+
+/* 跑馬燈動畫 */
+@keyframes marquee-animation {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%); /* 滾動一半的內容寬度，實現無縫循環 */
+  }
+}
+
 
 /* 聯絡區塊 */
 .contact-section {
@@ -852,6 +998,41 @@ footer {
 }
 
 /* 響應式設計 */
+@media (max-width: 992px) { /* Adjusted breakpoint for vision section */
+  .vision-content-layout {
+    flex-direction: column; /* 在小螢幕上垂直堆疊 */
+    align-items: center; /* 居中對齊 */
+    text-align: center; /* 文字居中 */
+  }
+
+  .vision-text-column {
+    max-width: 100%; /* 佔滿寬度 */
+    text-align: center; /* 文字居中 */
+  }
+
+  .vision-main-text,
+  .vision-sub-text {
+    text-align: center; /* 確保文字在小螢幕上居中 */
+  }
+
+  .vision-highlights-column {
+    grid-template-columns: repeat(2, 1fr); /* 保持兩列 */
+    width: 100%; /* 確保卡片佔滿可用寬度 */
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+  }
+
+  .revealable-text__text { /* 響應式調整打字特效文字大小 */
+    font-size: 2.8rem;
+  }
+}
+
 @media (max-width: 768px) {
   .hero h1 {
     font-size: 3rem;
@@ -869,14 +1050,11 @@ footer {
     grid-template-columns: 1fr;
   }
 
-  .achievements-grid {
-    grid-template-columns: 1fr;
+  /* Achievements marquee responsiveness */
+  .achievements-marquee-track {
+    animation-duration: 40s !important; /* Make it faster on smaller screens */
   }
-
-  .year-label {
-    font-size: 1.8rem;
-  }
-
+  
   .project-grid {
     display: flex;
     flex-direction: column;
@@ -904,6 +1082,21 @@ footer {
   .highlight-card {
     padding: 1.5rem;
   }
+
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vision-main-text {
+    font-size: 2.2rem; /* 更小的螢幕進一步調整標題大小 */
+  }
+  .revealable-text__text { /* 更小的螢幕進一步調整打字特效文字大小 */
+    font-size: 2.2rem;
+  }
+
+  .vision-sub-text {
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -929,8 +1122,14 @@ footer {
     font-size: 1.3rem;
   }
 
-  .vision-highlights {
-    grid-template-columns: 1fr;
+  .vision-highlights-column {
+    grid-template-columns: 1fr; /* 在最小螢幕上單列顯示卡片 */
+  }
+  
+  /* Adjust marquee card width for very small screens */
+  .achievement-card {
+    min-width: 200px;
+    max-width: 300px;
   }
 }
 

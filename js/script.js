@@ -264,8 +264,12 @@ function touchEnd(e) {
         // 檢查是否點擊到卡片
         const card = e.target.closest('.project-card');
         if (card) {
-            const index = Array.from(card.parentElement.children).indexOf(card);
-            openModal(index);
+            // Get the index based on the projects array directly
+            const cardTitle = card.querySelector('h3').textContent;
+            const projectIndex = projects.findIndex(p => p.title === cardTitle);
+            if (projectIndex !== -1) {
+                openModal(projectIndex);
+            }
         }
     }
     
@@ -273,33 +277,28 @@ function touchEnd(e) {
     const maxTranslate = 0;
     const minTranslate = -(carousel.scrollWidth - carousel.clientWidth);
     
-    if (currentTranslate > maxTranslate) {
-        currentTranslate = maxTranslate;
-    }
-    
-    if (currentTranslate < minTranslate) {
-        currentTranslate = minTranslate;
+    // Only apply boundary if scrollWidth is greater than clientWidth
+    if (carousel.scrollWidth > carousel.clientWidth) {
+        if (currentTranslate > maxTranslate) {
+            currentTranslate = maxTranslate;
+        }
+        
+        if (currentTranslate < minTranslate) {
+            currentTranslate = minTranslate;
+        }
+    } else {
+        // If content is smaller than carousel, reset translate to 0
+        currentTranslate = 0;
     }
     
     prevTranslate = currentTranslate;
     carousel.style.cursor = 'grab';
 }
 
-// 修改卡片點擊事件處理
-document.querySelectorAll('.project-card').forEach((card, index) => {
-    // 移除直接的onclick屬性
+// 移除舊的onclick屬性，並在拖曳事件處理器中判斷是否為點擊
+document.querySelectorAll('.project-card').forEach((card) => {
     card.removeAttribute('onclick');
 });
-
-// 更新事件監聽器
-carousel.addEventListener('mousedown', touchStart);
-carousel.addEventListener('mousemove', touchMove);
-carousel.addEventListener('mouseup', touchEnd);
-carousel.addEventListener('mouseleave', touchEnd);
-
-carousel.addEventListener('touchstart', touchStart);
-carousel.addEventListener('touchmove', touchMove);
-carousel.addEventListener('touchend', touchEnd);
 
 
 function animation() {
@@ -380,7 +379,11 @@ function switchMedia(index) {
     currentMediaIndex = index;
     const thumbnails = document.querySelectorAll('.media-thumbnail');
     thumbnails.forEach(thumb => thumb.classList.remove('active'));
-    thumbnails[index].classList.add('active');
+    
+    // Ensure the thumbnail exists before trying to add 'active'
+    if (thumbnails[index]) {
+        thumbnails[index].classList.add('active');
+    }
     
     const isVideo = index === currentProject.images.length;
     modalImage.style.display = isVideo ? 'none' : 'block';
@@ -418,7 +421,7 @@ VanillaTilt.init(document.querySelectorAll(".project-card"), {
     "max-glare": 0.5
 });
 
-// 滾動動畫
+// 滾動動畫 (舊的，現在主要由 GSAP 管理)
 const observerOptions = {
     threshold: 0.1,
     rootMargin: "0px 0px -50px 0px"
@@ -433,10 +436,13 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-document.querySelectorAll('.section, .timeline-item, .project-card').forEach(elem => {
-    elem.style.opacity = "0";
-    elem.style.transform = "translateY(30px)";
-    observer.observe(elem);
+document.querySelectorAll('.section, .timeline-item, .project-card, .product-card').forEach(elem => {
+    // 排除 vision 區塊，因為它的動畫由 GSAP 處理
+    if (!elem.classList.contains('vision-text-area') && !elem.closest('#vision')) {
+        elem.style.opacity = "0";
+        elem.style.transform = "translateY(30px)";
+        observer.observe(elem);
+    }
 });
 
 // 平滑滾動
@@ -469,6 +475,8 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
             message: form.message.value
         };
 
+        // This fetch call will only work if you have a Netlify function deployed at this endpoint.
+        // For local testing or non-Netlify deployments, this would need to be replaced with a different backend endpoint.
         const response = await fetch('/.netlify/functions/submitForm', {
             method: 'POST',
             body: JSON.stringify(formData),
@@ -487,6 +495,7 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
     } catch (error) {
         // 顯示錯誤訊息
         showNotification('送出訊息失敗，請稍後再試。', 'error');
+        console.error('Form submission error:', error); // Log the actual error
     } finally {
         // 恢復按鈕狀態
         submitBtn.disabled = false;
@@ -508,3 +517,71 @@ function showNotification(message, type) {
         notification.remove();
     }, 3000);
 }
+
+
+// GSAP 滾動觸發打字特效
+document.addEventListener('DOMContentLoaded', () => {
+    // 註冊 GSAP 插件
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 將目標文字分為兩行
+    const targetTextLine1 = "深耕健康促進與預防醫學";
+    const targetTextLine2 = "共創智慧醫療的未來";
+    const animatedTextContainer = document.getElementById('visionTypingText');
+    const revealableTextElement = document.querySelector('.revealable-text');
+
+    // 清空現有內容，並為每個字元（包括空格）創建 span，並處理換行
+    animatedTextContainer.innerHTML = '';
+    
+    // 處理第一行文字
+    targetTextLine1.split('').forEach(char => {
+        const span = document.createElement('span');
+        span.classList.add('revealable-text__letter');
+        if (char === ' ') {
+            span.innerHTML = '&nbsp;';
+        } else {
+            span.textContent = char;
+        }
+        animatedTextContainer.appendChild(span);
+    });
+
+    // 添加換行符號
+    animatedTextContainer.appendChild(document.createElement('br'));
+
+    // 處理第二行文字
+    targetTextLine2.split('').forEach(char => {
+        const span = document.createElement('span');
+        span.classList.add('revealable-text__letter');
+        if (char === ' ') {
+            span.innerHTML = '&nbsp;';
+        } else {
+            span.textContent = char;
+        }
+        animatedTextContainer.appendChild(span);
+    });
+
+
+    const letters = animatedTextContainer.querySelectorAll('.revealable-text__letter');
+
+    // 創建 GSAP 時間軸
+    const typingTimeline = gsap.timeline({
+        scrollTrigger: {
+            trigger: revealableTextElement, // 觸發器為整個 revealable-text 容器
+            start: "top 90%", // **調整這裡：讓動畫在觸發器頂部到達視窗高度的 80% 時開始**
+            end: "bottom 75%", // 當觸發器底部到達視窗中心時結束
+            scrub: true, // 將動畫綁定到滾動，實現平滑的滾動控制
+            // markers: true, // 僅供調試使用，顯示 ScrollTrigger 標記
+            toggleActions: "play none none reverse" // 滾動進入時播放，滾動離開時反向播放
+        }
+    });
+
+    // 將動畫添加到時間軸
+    typingTimeline.fromTo(letters, {
+        clipPath: "inset(0% 100% 0% 0%)" // 初始狀態：從右側完全剪裁，即隱藏
+    }, {
+        clipPath: "inset(0% 0% 0% 0%)", // 結束狀態：完全顯示
+        stagger: 0.05, // 每個字母之間延遲 0.05 秒顯示
+        duration: 0.1, // 每個字母顯示的持續時間
+        ease: "none" // 線性動畫，沒有加速或減速
+    });
+});

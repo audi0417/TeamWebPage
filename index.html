@@ -15,6 +15,9 @@
       rel="stylesheet"
     />
 
+    <!-- Favicon - 網站頁籤上的小圖示 -->
+    <link rel="icon" href="templates/logo/1-adfa266d.ico" type="image/ico">
+
     <!-- 自定義樣式 -->
     <link rel="stylesheet" href="css/style.css" />
   </head>
@@ -27,9 +30,13 @@
       <!-- 導航欄 -->
       <nav class="navbar">
         <div class="navbar-content">
-          <div class="logo">療心智能</div>
+          <div class="logo">
+            <img src="templates/logo/Logo.png" alt="療心智能 Logo" class="navbar-logo">
+            療心智能
+          </div>
           <div class="nav-links">
             <a href="#about">關於我們</a>
+            <a href="#products">產品介紹</a>
             <a href="#projects">創新項目</a>
             <a href="#achievements">團隊成就</a>
             <a href="#contact">聯絡我們</a>
@@ -47,15 +54,85 @@
         </div>
       </section>
 
-      <!-- 願景區塊 -->
+      <!-- 願景區塊 - 重新設計 -->
       <section class="section" id="vision">
         <div class="section-container">
           <h2 class="section-title">團隊願景</h2>
-          <div class="vision-content">
-            <p>
-              療心智能團隊長期深耕於健康促進與預防醫學的相關領域，過去常聚焦於銀髮族群的健康需求，推出長照媒合照護平台、遊戲化失智預防APP、服藥提醒
-              Linebot等產品服務，並參與競賽榮獲各項殊榮，同時也參與過多項孵化計畫，累積豐富的實務經驗。致力於個人化、智能化的服務開發，針對國內各類族群如慢性病患、長者、婦癌患者，解決其醫療與照護需求，提升全民健康意識。
-            </p>
+          <div class="vision-content-layout">
+            <!-- 左側：文字內容區 -->
+            <div class="vision-text-column">
+              <!-- 新增的文字內容容器，用於打字特效 -->
+              <div class="revealable-text text-reveal__revealable-text">
+                <div class="revealable-text__text-holder">
+                  <!-- 動畫文字容器，將由 JavaScript 填充 -->
+                  <div class="text-block revealable-text__text revealable-text__text--animated vision-main-text" id="visionTypingText">
+                    <!-- JS 會在這裡生成 <span class="revealable-text__letter"> 元素 -->
+                  </div>
+                  <!-- 靜態文字，用於佔位並確保佈局穩定，防止內容跳動 -->
+                  <div class="text-block revealable-text__text revealable-text__text--ghost vision-main-text" aria-hidden="true">
+                    深耕健康促進與預防醫學<br>共創智慧醫療的未來
+                  </div>
+                </div>
+              </div>
+              <p class="vision-sub-text">
+                療心智能團隊長期深耕於健康促進與預防醫學的相關領域，過去常聚焦於銀髮族群的健康需求，推出長照媒合照護平台、遊戲化失智預防APP、服藥提醒
+                Linebot等產品服務，並參與競賽榮獲各項殊榮，同時也參與過多項孵化計畫，累積豐富的實務經驗。我們致力於個人化、智能化的服務開發，針對國內各類族群如慢性病患、長者、婦癌患者，解決其醫療與照護需求，提升全民健康意識。
+              </p>
+            </div>
+
+            <!-- 右側：願景亮點卡片區塊 -->
+            <div class="vision-highlights-column">
+              <div class="highlight-card">
+                <div class="highlight-icon"><i class="fas fa-brain"></i></div>
+                <h3>智能驅動</h3>
+                <p>運用先進AI技術，提供精準、個人化的健康解決方案。</p>
+              </div>
+              <div class="highlight-card">
+                <div class="highlight-icon"><i class="fas fa-heartbeat"></i></div>
+                <h3>全人照護</h3>
+                <p>從預防到管理，全面關注用戶身心健康，提升生活品質。</p>
+              </div>
+              <div class="highlight-card">
+                <div class="highlight-icon"><i class="fas fa-users"></i></div>
+                <h3>連結社群</h3>
+                <p>打造互動平台，促進醫患溝通與社群支持。</p>
+              </div>
+              <div class="highlight-card">
+                <div class="highlight-icon"><i class="fas fa-lightbulb"></i></div>
+                <h3>持續創新</h3>
+                <p>不斷探索新技術與應用，引領智慧醫療發展。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 產品介紹區塊 -->
+      <section class="section" id="products">
+        <div class="section-container">
+          <h2 class="section-title">產品介紹</h2>
+          <div class="product-grid">
+            <div class="product-card">
+              <div class="card-content">
+                <div class="product-icon"><i class="fas fa-globe"></i></div>
+                <h3>網站設計及架設</h3>
+                <p>提供專業的網站規劃、設計與開發服務，打造符合品牌形象且功能完善的網站。</p>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="card-content">
+                <div class="product-icon"><i class="fas fa-robot"></i></div>
+                <h3>AI應用設計及導入</h3>
+                <p>運用先進的AI技術，為各行各業設計並導入智能應用，提升營運效率與決策品質。</p>
+              </div>
+            </div>
+            <div class="product-card">
+              <div class="card-content">
+                <div class="product-icon"><i class="fas fa-cogs"></i></div>
+                <h3>其他客製化應用開發</h3>
+                <p>根據客戶的特定需求，提供量身打造的軟體應用程式開發服務，解決獨特的業務挑戰。</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -120,94 +197,243 @@
         </div>
       </section>
 
-      <!-- 成就時間線 -->
-
+      <!-- 成就時間線 - 輪播 -->
       <section class="section" id="achievements">
         <div class="section-container">
           <h2 class="section-title">團隊成就</h2>
-          <div class="achievements-container">
-                      <div class="achievements-container">
-            <!-- 2025年度成就 -->
-            <div class="achievement-year">
-              <div class="year-label">2025</div>
-              <div class="achievements-grid">
+          <div class="achievements-marquee-wrapper">
+            <!-- First Layer -->
+            <div class="achievements-marquee-layer">
+              <div class="achievements-marquee-track">
                 <div class="achievement-card">
-                  <div class="achievement-icon">
-                    <i class="fas fa-medal"></i>
-                  </div>
+                  <div class="achievement-icon"><i class="fas fa-medal"></i></div>
                   <div class="achievement-content">
                     <h3>第8屆 致青春‧創未來全國選拔大賽</h3>
                     <span class="award-type">優選</span>
                   </div>
                 </div>
                 <div class="achievement-card">
-                  <div class="achievement-icon">
-                    <i class="fas fa-star"></i>
-                  </div>
+                  <div class="achievement-icon"><i class="fas fa-star"></i></div>
                   <div class="achievement-content">
                     <h3>經濟部智慧創新大賞</h3>
                     <span class="award-type">入圍</span>
                   </div>
                 </div>
-              </div>
-            </div>
-            <!-- 2024年度成就 -->
-            <div class="achievement-year">
-              <div class="year-label">2024</div>
-              <div class="achievements-grid">
                 <div class="achievement-card">
-                  <div class="achievement-icon">
-                    <i class="fas fa-award"></i>
-                  </div>
+                  <div class="achievement-icon"><i class="fas fa-award"></i></div>
                   <div class="achievement-content">
                     <h3>耳目醫新全國生醫創新創業競賽</h3>
                     <span class="award-type">佳作</span>
                   </div>
                 </div>
                 <div class="achievement-card">
-                  <div class="achievement-icon">
-                    <i class="fas fa-trophy"></i>
-                  </div>
+                  <div class="achievement-icon"><i class="fas fa-trophy"></i></div>
                   <div class="achievement-content">
                     <h3>第三屆保誠創新智造所</h3>
                     <span class="award-type">評審特別獎</span>
                   </div>
                 </div>
-
-                <div class="achievement-card">
-                  <div class="achievement-icon">
-                    <i class="fas fa-award"></i>
+                 <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-medal"></i></div>
+                  <div class="achievement-content">
+                    <h3>第8屆 致青春‧創未來全國選拔大賽</h3>
+                    <span class="award-type">優選</span>
                   </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-star"></i></div>
+                  <div class="achievement-content">
+                    <h3>經濟部智慧創新大賞</h3>
+                    <span class="award-type">入圍</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-award"></i></div>
+                  <div class="achievement-content">
+                    <h3>耳目醫新全國生醫創新創業競賽</h3>
+                    <span class="award-type">佳作</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-trophy"></i></div>
+                  <div class="achievement-content">
+                    <h3>第三屆保誠創新智造所</h3>
+                    <span class="award-type">評審特別獎</span>
+                  </div>
+                </div>
+              </div>
+              <div class="achievements-marquee-track" aria-hidden="true">
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-medal"></i></div>
+                  <div class="achievement-content">
+                    <h3>第8屆 致青春‧創未來全國選拔大賽</h3>
+                    <span class="award-type">優選</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-star"></i></div>
+                  <div class="achievement-content">
+                    <h3>經濟部智慧創新大賞</h3>
+                    <span class="award-type">入圍</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-award"></i></div>
+                  <div class="achievement-content">
+                    <h3>耳目醫新全國生醫創新創業競賽</h3>
+                    <span class="award-type">佳作</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-trophy"></i></div>
+                  <div class="achievement-content">
+                    <h3>第三屆保誠創新智造所</h3>
+                    <span class="award-type">評審特別獎</span>
+                  </div>
+                </div>
+                 <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-medal"></i></div>
+                  <div class="achievement-content">
+                    <h3>第8屆 致青春‧創未來全國選拔大賽</h3>
+                    <span class="award-type">優選</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-star"></i></div>
+                  <div class="achievement-content">
+                    <h3>經濟部智慧創新大賞</h3>
+                    <span class="award-type">入圍</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-award"></i></div>
+                  <div class="achievement-content">
+                    <h3>耳目醫新全國生醫創新創業競賽</h3>
+                    <span class="award-type">佳作</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-trophy"></i></div>
+                  <div class="achievement-content">
+                    <h3>第三屆保誠創新智造所</h3>
+                    <span class="award-type">評審特別獎</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Second Layer -->
+            <div class="achievements-marquee-layer">
+              <div class="achievements-marquee-track reverse">
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-award"></i></div>
                   <div class="achievement-content">
                     <h3>NTUE校園創業競賽</h3>
                     <span class="award-type">潛力獎</span>
                   </div>
                 </div>
-
                 <div class="achievement-card">
-                  <div class="achievement-icon">
-                    <i class="fas fa-medal"></i>
-                  </div>
+                  <div class="achievement-icon"><i class="fas fa-medal"></i></div>
                   <div class="achievement-content">
                     <h3>致青春‧創未來全國選拔大賽</h3>
                     <span class="award-type">優選</span>
                   </div>
                 </div>
-
                 <div class="achievement-card">
-                  <div class="achievement-icon">
-                    <i class="fas fa-award"></i>
-                  </div>
+                  <div class="achievement-icon"><i class="fas fa-award"></i></div>
                   <div class="achievement-content">
                     <h3>全國大專校院創新創業競賽</h3>
                     <span class="award-type">佳作</span>
                   </div>
                 </div>
-
                 <div class="achievement-card">
-                  <div class="achievement-icon">
-                    <i class="fas fa-certificate"></i>
+                  <div class="achievement-icon"><i class="fas fa-certificate"></i></div>
+                  <div class="achievement-content">
+                    <h3>第四屆捷運盃黑客松</h3>
+                    <span class="award-type">黑捷客獎</span>
                   </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-award"></i></div>
+                  <div class="achievement-content">
+                    <h3>NTUE校園創業競賽</h3>
+                    <span class="award-type">潛力獎</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-medal"></i></div>
+                  <div class="achievement-content">
+                    <h3>致青春‧創未來全國選拔大賽</h3>
+                    <span class="award-type">優選</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-award"></i></div>
+                  <div class="achievement-content">
+                    <h3>全國大專校院創新創業競賽</h3>
+                    <span class="award-type">佳作</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-certificate"></i></div>
+                  <div class="achievement-content">
+                    <h3>第四屆捷運盃黑客松</h3>
+                    <span class="award-type">黑捷客獎</span>
+                  </div>
+                </div>
+              </div>
+              <div class="achievements-marquee-track reverse" aria-hidden="true">
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-award"></i></div>
+                  <div class="achievement-content">
+                    <h3>NTUE校園創業競賽</h3>
+                    <span class="award-type">潛力獎</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-medal"></i></div>
+                  <div class="achievement-content">
+                    <h3>致青春‧創未來全國選拔大賽</h3>
+                    <span class="award-type">優選</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-award"></i></div>
+                  <div class="achievement-content">
+                    <h3>全國大專校院創新創業競賽</h3>
+                    <span class="award-type">佳作</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-certificate"></i></div>
+                  <div class="achievement-content">
+                    <h3>第四屆捷運盃黑客松</h3>
+                    <span class="award-type">黑捷客獎</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-award"></i></div>
+                  <div class="achievement-content">
+                    <h3>NTUE校園創業競賽</h3>
+                    <span class="award-type">潛力獎</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-medal"></i></div>
+                  <div class="achievement-content">
+                    <h3>致青春‧創未來全國選拔大賽</h3>
+                    <span class="award-type">優選</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-award"></i></div>
+                  <div class="achievement-content">
+                    <h3>全國大專校院創新創業競賽</h3>
+                    <span class="award-type">佳作</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-certificate"></i></div>
                   <div class="achievement-content">
                     <h3>第四屆捷運盃黑客松</h3>
                     <span class="award-type">黑捷客獎</span>
@@ -216,57 +442,146 @@
               </div>
             </div>
 
-            <!-- 2023年度成就 -->
-            <div class="achievement-year">
-              <div class="year-label">2023</div>
-              <div class="achievements-grid">
+            <!-- Third Layer -->
+            <div class="achievements-marquee-layer">
+              <div class="achievements-marquee-track">
                 <div class="achievement-card">
-                  <div class="achievement-icon">
-                    <i class="fas fa-award"></i>
-                  </div>
+                  <div class="achievement-icon"><i class="fas fa-award"></i></div>
                   <div class="achievement-content">
                     <h3>GSS AI Chatbot Hackathon</h3>
                     <span class="award-type">情有獨鍾獎</span>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <!-- 2022年度成就 -->
-            <div class="achievement-year">
-              <div class="year-label">2022</div>
-              <div class="achievements-grid">
                 <div class="achievement-card">
-                  <div class="achievement-icon">
-                    <i class="fas fa-trophy"></i>
-                  </div>
+                  <div class="achievement-icon"><i class="fas fa-trophy"></i></div>
                   <div class="achievement-content">
                     <h3>GSS AI Chatbot Hackathon</h3>
                     <span class="award-type">亞軍</span>
                   </div>
                 </div>
                 <div class="achievement-card">
-                  <div class="achievement-icon">
-                    <i class="fas fa-medal"></i>
-                  </div>
+                  <div class="achievement-icon"><i class="fas fa-medal"></i></div>
                   <div class="achievement-content">
                     <h3>全國健康科技創新創意競賽</h3>
                     <span class="award-type">季軍</span>
                   </div>
                 </div>
                 <div class="achievement-card">
-                  <div class="achievement-icon">
-                    <i class="fas fa-medal"></i>
-                  </div>
+                  <div class="achievement-icon"><i class="fas fa-medal"></i></div>
                   <div class="achievement-content">
                     <h3>新創盃全國大專校院企劃競賽</h3>
                     <span class="award-type">季軍</span>
                   </div>
                 </div>
                 <div class="achievement-card">
-                  <div class="achievement-icon">
-                    <i class="fas fa-medal"></i>
+                  <div class="achievement-icon"><i class="fas fa-medal"></i></div>
+                  <div class="achievement-content">
+                    <h3>全國技專院校i-Life創新競賽</h3>
+                    <span class="award-type">亞軍</span>
                   </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-award"></i></div>
+                  <div class="achievement-content">
+                    <h3>GSS AI Chatbot Hackathon</h3>
+                    <span class="award-type">情有獨鍾獎</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-trophy"></i></div>
+                  <div class="achievement-content">
+                    <h3>GSS AI Chatbot Hackathon</h3>
+                    <span class="award-type">亞軍</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-medal"></i></div>
+                  <div class="achievement-content">
+                    <h3>全國健康科技創新創意競賽</h3>
+                    <span class="award-type">季軍</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-medal"></i></div>
+                  <div class="achievement-content">
+                    <h3>新創盃全國大專校院企劃競賽</h3>
+                    <span class="award-type">季軍</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-medal"></i></div>
+                  <div class="achievement-content">
+                    <h3>全國技專院校i-Life創新競賽</h3>
+                    <span class="award-type">亞軍</span>
+                  </div>
+                </div>
+              </div>
+              <div class="achievements-marquee-track" aria-hidden="true">
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-award"></i></div>
+                  <div class="achievement-content">
+                    <h3>GSS AI Chatbot Hackathon</h3>
+                    <span class="award-type">情有獨鍾獎</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-trophy"></i></div>
+                  <div class="achievement-content">
+                    <h3>GSS AI Chatbot Hackathon</h3>
+                    <span class="award-type">亞軍</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-medal"></i></div>
+                  <div class="achievement-content">
+                    <h3>全國健康科技創新創意競賽</h3>
+                    <span class="award-type">季軍</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-medal"></i></div>
+                  <div class="achievement-content">
+                    <h3>新創盃全國大專校院企劃競賽</h3>
+                    <span class="award-type">季軍</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-medal"></i></div>
+                  <div class="achievement-content">
+                    <h3>全國技專院校i-Life創新競賽</h3>
+                    <span class="award-type">亞軍</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-award"></i></div>
+                  <div class="achievement-content">
+                    <h3><h3>GSS AI Chatbot Hackathon</h3>
+                    <span class="award-type">情有獨鍾獎</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-trophy"></i></div>
+                  <div class="achievement-content">
+                    <h3>GSS AI Chatbot Hackathon</h3>
+                    <span class="award-type">亞軍</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-medal"></i></div>
+                  <div class="achievement-content">
+                    <h3>全國健康科技創新創意競賽</h3>
+                    <span class="award-type">季軍</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-medal"></i></div>
+                  <div class="achievement-content">
+                    <h3>新創盃全國大專校院企劃競賽</h3>
+                    <span class="award-type">季軍</span>
+                  </div>
+                </div>
+                <div class="achievement-card">
+                  <div class="achievement-icon"><i class="fas fa-medal"></i></div>
                   <div class="achievement-content">
                     <h3>全國技專院校i-Life創新競賽</h3>
                     <span class="award-type">亞軍</span>
@@ -287,9 +602,9 @@
               <h3>讓我們一起創造健康的未來</h3>
 
               <div class="contact-details">
-                <p><i class="fas fa-envelope"></i> support@healthymind-tech.com </p>
-                <p><i class="fas fa-phone"></i> 0978-110-677 </p>
-                <p><i class="fas fa-map-marker-alt"></i> 臺北市 </p>
+                <p><i class="fas fa-envelope"></i> support@healthymind-tech.com</p>
+                <p><i class="fas fa-phone"></i> 0978-110-677</p>
+                <p><i class="fas fa-map-marker-alt"></i> 臺北市</p>
               </div>
             </div>
             <form class="contact-form" id="contactForm">
@@ -396,6 +711,7 @@
           <h3>快速連結</h3>
           <ul>
             <li><a href="#about">關於我們</a></li>
+            <li><a href="#products">產品介紹</a></li>
             <li><a href="#projects">創新項目</a></li>
             <li><a href="#achievements">團隊成就</a></li>
             <li><a href="#contact">聯絡我們</a></li>
@@ -404,9 +720,9 @@
         <div class="footer-section">
           <h3>聯繫方式</h3>
           <ul>
-            <li><i class="fas fa-phone"></i> 0978-110-677 </li>
-            <li><i class="fas fa-envelope"></i> support@healthymind-tech.com </li>
-            <li><i class="fas fa-map-marker-alt"></i> 暫無 </li>
+            <li><i class="fas fa-phone"></i> 0978-110-677</li>
+            <li><i class="fas fa-envelope"></i> support@healthymind-tech.com</li>
+            <li><i class="fas fa-map-marker-alt"></i> 暫無</li>
           </ul>
         </div>
       </div>
@@ -424,6 +740,10 @@
 
     <!-- 外部腳本 -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <!-- 引入 GSAP 核心函式庫 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <!-- 引入 GSAP ScrollTrigger 插件 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
     <script src="js/script.js"></script>
   </body>
