@@ -475,9 +475,9 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
             message: form.message.value
         };
 
-        // This fetch call will only work if you have a Netlify function deployed at this endpoint.
-        // For local testing or non-Netlify deployments, this would need to be replaced with a different backend endpoint.
-        const response = await fetch('/.netlify/functions/submitForm', {
+        // 將請求發送到 Cloudflare Worker 路由
+        // 這裡的 '/submit' 會自動解析為 healthymind-tech.com/submit (如果路由設定正確)
+        const response = await fetch('/submit', {
             method: 'POST',
             body: JSON.stringify(formData),
             headers: {
@@ -487,7 +487,11 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
 
         const result = await response.json();
 
-        if (!response.ok) throw new Error(result.error);
+        // 檢查回應狀態碼
+        if (!response.ok) {
+            // 如果回應狀態碼不是 2xx，則拋出錯誤
+            throw new Error(result.error || `HTTP 錯誤：${response.status}`);
+        }
 
         // 顯示成功訊息
         showNotification('訊息已成功送出！', 'success');
@@ -495,7 +499,7 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
     } catch (error) {
         // 顯示錯誤訊息
         showNotification('送出訊息失敗，請稍後再試。', 'error');
-        console.error('Form submission error:', error); // Log the actual error
+        console.error('表單提交錯誤:', error); // 記錄實際錯誤
     } finally {
         // 恢復按鈕狀態
         submitBtn.disabled = false;
@@ -567,7 +571,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const typingTimeline = gsap.timeline({
         scrollTrigger: {
             trigger: revealableTextElement, // 觸發器為整個 revealable-text 容器
-            start: "top 90%", // **調整這裡：讓動畫在觸發器頂部到達視窗高度的 80% 時開始**
+            start: "top 80%", // **調整這裡：讓動畫在觸發器頂部到達視窗高度的 80% 時開始**
             end: "bottom 75%", // 當觸發器底部到達視窗中心時結束
             scrub: true, // 將動畫綁定到滾動，實現平滑的滾動控制
             // markers: true, // 僅供調試使用，顯示 ScrollTrigger 標記
