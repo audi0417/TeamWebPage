@@ -530,7 +530,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 將目標文字分為兩行
     const targetTextLine1 = "深耕健康促進與預防醫學";
-    const targetTextLine2 = "共創智慧科技未來";
+    const targetTextLine2 = "共創智慧醫療的未來";
     const animatedTextContainer = document.getElementById('visionTypingText');
     const revealableTextElement = document.querySelector('.revealable-text');
 
