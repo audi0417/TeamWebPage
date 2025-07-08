@@ -609,6 +609,143 @@ body {
 }
 
 
+/* 最新資訊區塊 */
+.blog-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.blog-intro {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.blog-intro p {
+  font-size: 1.2rem;
+  color: rgba(240, 240, 245, 0.8);
+  margin-bottom: 2rem;
+}
+
+.blog-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--gradient);
+  color: white;
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.blog-link-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 245, 255, 0.3);
+}
+
+.blog-posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.blog-post-card {
+  background: var(--glass);
+  border-radius: 20px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.blog-post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 245, 255, 0.2);
+  border-color: var(--primary);
+}
+
+.blog-post-card h3 {
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+}
+
+.blog-post-date {
+  color: rgba(240, 240, 245, 0.6);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.blog-post-excerpt {
+  color: rgba(240, 240, 245, 0.9);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.blog-post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.blog-post-tag {
+  background: rgba(0, 245, 255, 0.1);
+  color: var(--primary);
+  padding: 0.2rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  border: 1px solid rgba(0, 245, 255, 0.3);
+}
+
+/* 載入骨架屏樣式 */
+.loading-card {
+  pointer-events: none;
+}
+
+.post-skeleton {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-title {
+  height: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  width: 80%;
+}
+
+.skeleton-date {
+  height: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  width: 40%;
+}
+
+.skeleton-content {
+  height: 4rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  width: 100%;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
 /* 聯絡區塊 */
 .contact-section {
   background: rgba(255, 255, 255, 0.02);
@@ -1065,6 +1202,40 @@ footer {
 
   .nav-links {
     display: none;
+  }
+
+  .blog-posts-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .blog-intro p {
+    font-size: 1.1rem;
+  }
+  
+  .blog-link-btn {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+  }
+  
+  .blog-post-card {
+    padding: 1.5rem;
+  }
+  
+  .blog-post-card h3 {
+    font-size: 1.2rem;
+  }
+  
+  .blog-post-date {
+    font-size: 0.85rem;
+  }
+  
+  .blog-post-excerpt {
+    font-size: 0.95rem;
+  }
+  
+  .blog-post-tag {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.6rem;
   }
 
   .contact-container {

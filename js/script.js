@@ -523,8 +523,108 @@ function showNotification(message, type) {
 }
 
 
+// 部落格文章載入功能
+async function loadBlogPosts() {
+    const blogPostsGrid = document.getElementById('blogPostsGrid');
+    const blogUrl = 'https://blog.healthymind-tech.com'; // 部落格網域
+    
+    try {
+        // 嘗試從部落格網站載入 JSON feed
+        let posts = [];
+        
+        try {
+            const response = await fetch(`${blogUrl}/index.json`);
+            if (response.ok) {
+                const data = await response.json();
+                posts = data.posts || [];
+            }
+        } catch (fetchError) {
+            console.log('無法從部落格網站載入，使用預設文章');
+        }
+        
+        // 如果無法載入或沒有文章，使用預設文章
+        if (posts.length === 0) {
+            posts = [
+                {
+                    title: "歡迎來到療心智能的部落格！",
+                    date: "2025-07-08",
+                    excerpt: "歡迎來到療心智能的部落格！我們將在這裡分享最新的健康科技資訊、AI應用案例和技術解析。",
+                    link: `${blogUrl}/blog/hello-world/`,
+                    tags: ["部落格", "宣告"]
+                },
+                {
+                    title: "探索AI在健康管理中的應用",
+                    date: "2025-07-07",
+                    excerpt: "人工智能技術正在彼底改變健康管理的面貌，從病情預測到個人化治療方案。",
+                    link: `${blogUrl}/blog/ai-health-applications/`,
+                    tags: ["AI", "健康管理", "技術"]
+                },
+                {
+                    title: "智能藥物管理系統的設計思維",
+                    date: "2025-07-06",
+                    excerpt: "療心智能團隊分享在開發「健康小管家」時的設計理念和技術挑戰。",
+                    link: `${blogUrl}/blog/smart-medication-system/`,
+                    tags: ["藥物管理", "系統設計", "智能化"]
+                }
+            ];
+        }
+        
+        // 清除載入骨架屏
+        blogPostsGrid.innerHTML = '';
+        
+        // 只顯示前3篇文章
+        const displayPosts = posts.slice(0, 3);
+        
+        // 生成文章卡片
+        displayPosts.forEach(post => {
+            const postCard = document.createElement('div');
+            postCard.className = 'blog-post-card';
+            postCard.innerHTML = `
+                <h3>${post.title}</h3>
+                <div class="blog-post-date">${formatDate(post.date)}</div>
+                <p class="blog-post-excerpt">${post.excerpt}</p>
+                <div class="blog-post-tags">
+                    ${post.tags.map(tag => `<span class="blog-post-tag">${tag}</span>`).join('')}
+                </div>
+            `;
+            
+            // 添加點擊事件
+            postCard.addEventListener('click', () => {
+                window.open(post.link, '_blank');
+            });
+            
+            blogPostsGrid.appendChild(postCard);
+        });
+        
+    } catch (error) {
+        console.error('載入部落格文章失敗:', error);
+        // 顯示錯誤訊息
+        blogPostsGrid.innerHTML = `
+            <div class="blog-post-card">
+                <h3>無法載入文章</h3>
+                <p>請直接造訪我們的部落格查看最新文章。</p>
+                <div class="blog-post-tags">
+                    <span class="blog-post-tag">錯誤</span>
+                </div>
+            </div>
+        `;
+    }
+}
+
+// 日期格式化功能
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('zh-TW', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+}
+
 // GSAP 滾動觸發打字特效
 document.addEventListener('DOMContentLoaded', () => {
+    // 載入部落格文章
+    loadBlogPosts();
     // 註冊 GSAP 插件
     gsap.registerPlugin(ScrollTrigger);
 
