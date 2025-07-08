@@ -1,0 +1,23 @@
+baseURL = "/blog/"
+languageCode = "zh-tw"
+title = "療心智能"
+theme = "hugo-theme-dream"
+
+[params]
+  author = "療心智能"
+  description = "專屬於療心智能的部落格"
+  ShowShareButtons = true
+  ShowReadingTime = true
+  ShowToc = true
+  ShowCodeCopyButtons = true
+
+[menu]
+  [[menu.main]]
+    name = "首頁"
+    url = "/blog/"
+    weight = 1
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
