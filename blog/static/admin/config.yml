@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: yourusername/your-repo  # 請替換成你的 GitHub repo
+  repo: audi0417/TeamWebPage
   branch: main
 
 media_folder: "static/images/uploads"
