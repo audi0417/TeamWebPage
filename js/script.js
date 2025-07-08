@@ -526,7 +526,7 @@ function showNotification(message, type) {
 // 部落格文章載入功能
 async function loadBlogPosts() {
     const blogPostsGrid = document.getElementById('blogPostsGrid');
-    const blogUrl = 'https://blog.healthymind-tech.com'; // 部落格網域
+    const blogUrl = 'https://healthymind-tech.com/blog'; // 部落格網域
     
     try {
         // 嘗試從部落格網站載入 JSON feed
@@ -549,21 +549,21 @@ async function loadBlogPosts() {
                     title: "歡迎來到療心智能的部落格！",
                     date: "2025-07-08",
                     excerpt: "歡迎來到療心智能的部落格！我們將在這裡分享最新的健康科技資訊、AI應用案例和技術解析。",
-                    link: `${blogUrl}/blog/hello-world/`,
+                    link: `${blogUrl}/hello-world/`,
                     tags: ["部落格", "宣告"]
                 },
                 {
                     title: "探索AI在健康管理中的應用",
                     date: "2025-07-07",
                     excerpt: "人工智能技術正在彼底改變健康管理的面貌，從病情預測到個人化治療方案。",
-                    link: `${blogUrl}/blog/ai-health-applications/`,
+                    link: `${blogUrl}/ai-health-applications/`,
                     tags: ["AI", "健康管理", "技術"]
                 },
                 {
                     title: "智能藥物管理系統的設計思維",
                     date: "2025-07-06",
                     excerpt: "療心智能團隊分享在開發「健康小管家」時的設計理念和技術挑戰。",
-                    link: `${blogUrl}/blog/smart-medication-system/`,
+                    link: `${blog}/smart-medication-system/`,
                     tags: ["藥物管理", "系統設計", "智能化"]
                 }
             ];
